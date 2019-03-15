@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Others on FantasyAir</title>
-    <link>/categories/others/</link>
+    <link>https://i.acxblog.site/categories/others/</link>
     <description>Recent content in Others on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 14 Mar 2019 10:22:29 +0800</lastBuildDate>
     
-	<atom:link href="/categories/others/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://i.acxblog.site/categories/others/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Inside Space</title>
-      <link>/posts/my-first-post/</link>
+      <link>https://i.acxblog.site/posts/my-first-post/</link>
       <pubDate>Thu, 14 Mar 2019 10:22:29 +0800</pubDate>
       
-      <guid>/posts/my-first-post/</guid>
+      <guid>https://i.acxblog.site/posts/my-first-post/</guid>
       <description>&lt;h1 id=&#34;text-hello-world&#34;&gt;$\text{Hello world!}$&lt;/h1&gt;</description>
     </item>
     

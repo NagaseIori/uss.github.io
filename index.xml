@@ -2,48 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FantasyAir</title>
-    <link>/</link>
+    <link>https://i.acxblog.site/</link>
     <description>Recent content on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 15 Mar 2019 15:05:29 +0800</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://i.acxblog.site/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>UOJ462 新年的小黄鸭</title>
-      <link>/posts/sol-uoj-462/</link>
+      <link>https://i.acxblog.site/posts/sol-uoj-462/</link>
       <pubDate>Fri, 15 Mar 2019 15:05:29 +0800</pubDate>
       
-      <guid>/posts/sol-uoj-462/</guid>
+      <guid>https://i.acxblog.site/posts/sol-uoj-462/</guid>
       <description>&lt;p&gt;一道不错&lt;del&gt;相对简单&lt;/del&gt;的题目。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Inside Space</title>
-      <link>/posts/my-first-post/</link>
+      <link>https://i.acxblog.site/posts/my-first-post/</link>
       <pubDate>Thu, 14 Mar 2019 10:22:29 +0800</pubDate>
       
-      <guid>/posts/my-first-post/</guid>
+      <guid>https://i.acxblog.site/posts/my-first-post/</guid>
       <description>&lt;h1 id=&#34;text-hello-world&#34;&gt;$\text{Hello world!}$&lt;/h1&gt;</description>
     </item>
     
     <item>
       <title>Archive</title>
-      <link>/archive/</link>
+      <link>https://i.acxblog.site/archive/</link>
       <pubDate>Sat, 19 Aug 2017 21:37:49 +0800</pubDate>
       
-      <guid>/archive/</guid>
+      <guid>https://i.acxblog.site/archive/</guid>
       <description></description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>/about/</link>
+      <link>https://i.acxblog.site/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://i.acxblog.site/about/</guid>
       <description>没有什么好说的。 有人可能已经注意到了我的头像。 主页的一个，或许还有gravatar的那一个。 使用这两个头像的原因是因为我认为这些表情太可爱了</description>
     </item>
     
