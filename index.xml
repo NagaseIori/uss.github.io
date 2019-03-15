@@ -21,15 +21,6 @@
     </item>
     
     <item>
-      <title>About Me</title>
-      <link>https://i.acxblog.site/about/</link>
-      <pubDate>Thu, 14 Mar 2019 11:39:31 +0800</pubDate>
-      
-      <guid>https://i.acxblog.site/about/</guid>
-      <description>没有什么好说的。 有人可能已经注意到了我的头像。 主页的一个，或许还有gravatar的那一个。 使用这两个头像的原因是因为我认为这些表情太可爱了</description>
-    </item>
-    
-    <item>
       <title>Inside Space</title>
       <link>https://i.acxblog.site/posts/my-first-post/</link>
       <pubDate>Thu, 14 Mar 2019 10:22:29 +0800</pubDate>
@@ -45,6 +36,15 @@
       
       <guid>https://i.acxblog.site/archive/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>https://i.acxblog.site/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://i.acxblog.site/about/</guid>
+      <description>没有什么好说的。 有人可能已经注意到了我的头像。 主页的一个，或许还有gravatar的那一个。 使用这两个头像的原因是因为我认为这些表情太可爱了</description>
     </item>
     
   </channel>
