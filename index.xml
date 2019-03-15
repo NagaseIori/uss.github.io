@@ -6,10 +6,19 @@
     <description>Recent content on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 14 Mar 2019 11:39:31 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 15 Mar 2019 15:05:29 +0800</lastBuildDate>
     
 	<atom:link href="https://i.acxblog.site/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>新年的小黄鸭</title>
+      <link>https://i.acxblog.site/posts/sol-uoj-462/</link>
+      <pubDate>Fri, 15 Mar 2019 15:05:29 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/sol-uoj-462/</guid>
+      <description>Solution 很大胆的想法。考虑以子树dp，然后一条链大力拉下来枚举链底部求贡献。 那么对于每棵子树求最优的链底。 用线段树维护。考虑线段树上移，链底贡献的</description>
+    </item>
     
     <item>
       <title>About Me</title>
