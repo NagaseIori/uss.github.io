@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on FantasyAir</title>
-    <link>https://i.acxblog.site/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	<atom:link href="https://i.acxblog.site/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Others</title>
-      <link>https://i.acxblog.site/categories/others/</link>
+      <link>/categories/others/</link>
       <pubDate>Thu, 14 Mar 2019 10:22:29 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/categories/others/</guid>
+      <guid>/categories/others/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Solution</title>
-      <link>https://i.acxblog.site/categories/solution/</link>
+      <link>/categories/solution/</link>
       <pubDate>Fri, 15 Mar 2019 15:05:29 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/categories/solution/</guid>
+      <guid>/categories/solution/</guid>
       <description></description>
     </item>
     

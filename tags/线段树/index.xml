@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>线段树 on FantasyAir</title>
-    <link>https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/</link>
+    <link>/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/</link>
     <description>Recent content in 线段树 on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 15 Mar 2019 15:05:29 +0800</lastBuildDate>
     
-	<atom:link href="https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>UOJ462 新年的小黄鸭</title>
-      <link>https://i.acxblog.site/posts/sol-uoj-462/</link>
+      <link>/posts/sol-uoj-462/</link>
       <pubDate>Fri, 15 Mar 2019 15:05:29 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-uoj-462/</guid>
+      <guid>/posts/sol-uoj-462/</guid>
       <description>&lt;p&gt;一道不错&lt;del&gt;相对简单&lt;/del&gt;的题目。&lt;/p&gt;</description>
     </item>
     
