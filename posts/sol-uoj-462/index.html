@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    新年的小黄鸭 | FantasyAir
+    UOJ462 新年的小黄鸭 | FantasyAir
   </title>
 
   
@@ -230,18 +230,7 @@
       <div class="inner">
         <section class="post-wrapper">
           
-          <div class="toc-panel">
-            <nav id="TableOfContents">
-<ul>
-<li><a href="#solution">Solution</a>
-<ul>
-<li><a href="#code">Code</a></li>
-</ul></li>
-</ul>
-</nav>
-          </div>
-          
-          <div class="post reveal ">
+          <div class="post reveal  no-toc ">
             <div class="card">
               <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
@@ -258,7 +247,7 @@
         
     
       
-    <span class="breadcrumb">新年的小黄鸭</span>
+    <span class="breadcrumb">UOJ462 新年的小黄鸭</span>
 
         
     
@@ -267,7 +256,7 @@
 </section>
               
               <div class="card-header postinfo">
-                <span class="card-title">新年的小黄鸭 </span>
+                <span class="card-title">UOJ462 新年的小黄鸭 </span>
               </div>
               <div class="card-header date">
                 
@@ -292,7 +281,7 @@
               <div class="card-content">
 
                 <article class="article">
-                  
+                  <p>一道不错<del>相对简单</del>的题目。</p>
 
 <h1 id="solution">Solution</h1>
 
@@ -300,7 +289,7 @@
 
 <p>那么对于每棵子树求最优的链底。</p>
 
-<p>用线段树维护。考虑线段树上移，链底贡献的变化量。</p>
+<p>用线段树维护。考虑点上移，链底贡献的变化量。</p>
 
 <p>重链贡献中有 $\log$ 的存在，但我们发现每个链底及其每棵子树对重链贡献的变化次数不会超过 $\log$ 次，因此复杂度是 $O(n\log^2 n)$ 的。</p>
 
@@ -388,7 +377,6 @@ int main() {
     return 0;
 }
 </code></pre>
-
                 </article>
 
               </div>
