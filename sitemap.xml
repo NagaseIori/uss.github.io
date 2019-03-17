@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://i.acxblog.site/posts/sol-agc-032-c/</loc>
+    <lastmod>2019-03-17T20:11:26+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://i.acxblog.site/posts/favorite-pixiv-artists/</loc>
     <lastmod>2019-03-17T14:34:35+08:00</lastmod>
   </url>
@@ -38,7 +43,7 @@
   
   <url>
     <loc>https://i.acxblog.site/</loc>
-    <lastmod>2019-03-17T14:34:35+08:00</lastmod>
+    <lastmod>2019-03-17T20:11:26+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -62,13 +67,13 @@
   
   <url>
     <loc>https://i.acxblog.site/posts/</loc>
-    <lastmod>2019-03-17T14:34:35+08:00</lastmod>
+    <lastmod>2019-03-17T20:11:26+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://i.acxblog.site/categories/solution/</loc>
-    <lastmod>2019-03-15T22:42:36+08:00</lastmod>
+    <lastmod>2019-03-17T20:11:26+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,6 +92,12 @@
   <url>
     <loc>https://i.acxblog.site/tags/%E5%87%B8%E4%BC%98%E5%8C%96dp/</loc>
     <lastmod>2019-03-15T22:42:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://i.acxblog.site/tags/%E6%9E%84%E9%80%A0/</loc>
+    <lastmod>2019-03-17T20:11:26+08:00</lastmod>
     <priority>0</priority>
   </url>
   
