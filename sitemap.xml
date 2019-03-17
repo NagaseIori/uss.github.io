@@ -50,7 +50,13 @@
   
   <url>
     <loc>https://i.acxblog.site/categories/others/</loc>
-    <lastmod>2019-03-14T10:22:29+08:00</lastmod>
+    <lastmod>2019-03-17T14:34:35+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://i.acxblog.site/tags/pixiv/</loc>
+    <lastmod>2019-03-17T14:34:35+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -69,6 +75,12 @@
   <url>
     <loc>https://i.acxblog.site/tags/</loc>
     <lastmod>2019-03-14T10:22:29+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://i.acxblog.site/tags/vocaloid/</loc>
+    <lastmod>2019-03-17T14:34:35+08:00</lastmod>
     <priority>0</priority>
   </url>
   
