@@ -329,9 +329,9 @@
 
 <p>网上已经讲得很详细了吧？</p>
 
-<p>补充几个问题。一是可以直接 $f<em>{R}=\sum \limits</em>{j=L-1}^R f_j$ 进行转移。但是得注意先转移大区间再转移小区间（这属于被部分包含），否则的话你可能会丢失不选小区间的决策。</p>
+<p>补充几个问题。一是可以直接 <code>$f_{R}=\sum \limits_{j=L-1}^R f_j$</code> 进行转移。但是得注意先转移大区间再转移小区间（这属于被部分包含），否则的话你可能会丢失不选小区间的决策。</p>
 
-<p>第二个问题是若速度可以相等，那么需要将开始的排序进行一些小修改。考虑 $X_i$ 的左端比它大的最小的 $j$ ，若有数个 $V_k$ 等于 $V_j$ ，那么这些 $V_k$ 的点是肯定不能被染色的。右侧同理。</p>
+<p>第二个问题是若速度可以相等，那么需要将开始的排序进行一些小修改。考虑 <code>$X_i$</code> 的左端比它大的最小的 <code>$j$</code> ，若有数个 <code>$V_k$</code> 等于 <code>$V_j$</code> ，那么这些 <code>$V_k$</code> 的点是肯定不能被染色的。右侧同理。</p>
 
 <h2 id="code">Code</h2>
 
@@ -502,6 +502,26 @@ int main() {
   hljs.registerLanguage("graphql", function (e) { return { aliases: ["gql"], k: { keyword: "query mutation subscription|10 type interface union scalar fragment|10 enum on ...", literal: "true false null" }, c: [e.HCM, e.QSM, e.NM, { cN: "type", b: "[^\\w][A-Z][a-z]", e: "\\W", eE: !0 }, { cN: "literal", b: "[^\\w][A-Z][A-Z]", e: "\\W", eE: !0 }, { cN: "variable", b: "\\$", e: "\\W", eE: !0 }, { cN: "keyword", b: "[.]{2}", e: "\\." }, { cN: "meta", b: "@", e: "\\W", eE: !0 }], i: /([;<']|BEGIN)/ } });
   hljs.initHighlightingOnLoad();
   
+</script>
+
+<script>
+(function() {
+var i, text, code, codes = document.getElementsByTagName('code');
+for (i = 0; i < codes.length;) {
+  code = codes[i];
+  if (code.parentNode.tagName !== 'PRE' &&
+      code.childElementCount === 0) {
+    text = code.textContent;
+    if (/^\\\((.|\s)+\\\)$/.test(text) ||
+        /^\$(.|\s)+\$$/.test(text) ||
+        /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+      code.outerHTML = code.innerHTML;  
+      continue;
+    }
+  }
+  i++;
+}
+})();
 </script>
 
 
