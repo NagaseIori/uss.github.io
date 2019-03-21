@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    树形dp | FantasyAir
+    Railway | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/%E6%A0%91%E5%BD%A2dp/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6074/" />
 
   
   
@@ -274,11 +274,31 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -289,65 +309,295 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">树形dp</span>
+    <span class="breadcrumb">Railway</span>
 
         
     
       
   </div>
 </section>
-    
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-uoj-462/">UOJ462 新年的小黄鸭 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月15日</time>
               
-              <address>
+              <div class="card-header postinfo">
+                <span class="card-title">Railway </span>
+              </div>
+              <div class="card-header date">
                 
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
+                  </address>
+                </div>
                 
-              </address>
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2019年03月21日
+                  </time>
+                </div>
+                
+                
+
+              </div>
               
+              <div class="card-content">
+
+                <article class="article">
+                  <p>做法很巧妙。</p>
+
+<h1 id="problem">Problem</h1>
+
+<p>给你一棵树，和数条铁路的起点和终点，求有多少个火车会在路上相遇。</p>
+
+<p>每个火车的速度相同，起终点也算相遇，但经过终点后火车消失。</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>首先如果在边上相遇一定是在中点，所以可以给每条边单独开一个点转化问题。</p>
+
+<p>然后将路径分为上行和下行，lca算在上行，求上下相交和上上相交即可。</p>
+
+<p>上上相交可以线段树合并，上下相交可以对每条重链分别处理，以重链的深度为 $x$ 轴，离起点的距离为 $y$ 轴，得到每条路径在每个重链的函数和值域，那么问题转化成求 $k=1/-1$ 的直线的交点数，可以直接离散到 $y$ 轴后扫描线求交点个数。</p>
+
+<p>注意上上相交的起点重合不要漏算。</p>
+
+<h2 id="code">Code</h2>
+
+<pre><code class="language-cpp">// Code by ajcxsu
+// Problem: correction
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long ll;
+template&lt;typename T&gt; inline void gn(T &amp;x) {
+    char ch=getchar(); x=0;
+    while(!isdigit(ch)) ch=getchar();
+    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar();
+}
+template&lt;typename T, typename ...Args&gt; inline void gn(T &amp;x, Args &amp;...args) { gn(x), gn(args...); }
+
+const int N=2e5+10;
+int h[N], to[N&lt;&lt;1], nexp[N&lt;&lt;1], p=1;
+inline void ins(int a, int b) { nexp[p]=h[a], h[a]=p, to[p]=b, p++; }
+
+int siz[N], fa[N], top[N], son[N], dep[N], dfn[N], len[N], idx;
+int bot[N];
+void dfs1(int x, int k) {
+    dep[x]=k, siz[x]=1;
+    for(int u=h[x];u;u=nexp[u])
+        if(!dep[to[u]]) {
+            fa[to[u]]=x, dfs1(to[u], k+1), siz[x]+=siz[to[u]];
+            if(siz[son[x]]&lt;siz[to[u]]) son[x]=to[u];
+        }
+}
+void dfs2(int x, int t) {
+    top[x]=t, dfn[x]=++idx;
+    len[t]++;
+    if(son[x]) dfs2(son[x], t);
+    else bot[t]=x;
+    for(int u=h[x];u;u=nexp[u])
+        if(!dfn[to[u]]) dfs2(to[u], to[u]);
+}
+
+int lca(int s, int t, int mode=0) {
+    while(top[s]!=top[t]) {
+        if(dep[top[s]]&lt;dep[top[t]]) swap(s, t);
+        if(mode &amp;&amp; fa[top[s]]==t) return top[s];
+        s=fa[top[s]];
+    }
+    if(mode) return dep[s]&lt;dep[t]?son[s]:son[t];
+    return dep[s]&lt;dep[t]?s:t;
+}
+
+struct Seg { int k, b, l, r; } ;
+vector&lt;Seg&gt; td[N];
+
+struct Node *nil;
+struct Node {
+    int v, t;
+    Node *ls, *rs;
+    Node () { v=t=0; ls=rs=nil; }
+} *nd[N], *nd2[N];
+void ini() { nil=new Node(), nil-&gt;ls=nil-&gt;rs=nil, fill(nd, nd+N, nil), fill(nd2, nd2+N, nil); }
+ll updata(Node *&amp;x, int l, int r, int d, int v) {
+    if(x==nil) x=new Node();
+    x-&gt;v+=v; int mid=(l+r)&gt;&gt;1;
+    if(l==r) { x-&gt;t=l; return x-&gt;v-v; }
+    if(d&lt;=mid) return updata(x-&gt;ls, l, mid, d, v);
+    else return updata(x-&gt;rs, mid+1, r, d, v);
+}
+void Merge(Node *&amp;x, Node *a, Node *b, ll &amp;cnt, int mode=0) {
+    if(a==nil) { x=b; return; }
+    if(b==nil) { x=a; return; }
+    if(x==nil) x=new Node();
+    if(!mode &amp;&amp; a-&gt;t) cnt+=1ll*a-&gt;v*b-&gt;v;
+    x-&gt;v=a-&gt;v+b-&gt;v;
+    Merge(x-&gt;ls, a-&gt;ls, b-&gt;ls, cnt, mode);
+    Merge(x-&gt;rs, a-&gt;rs, b-&gt;rs, cnt, mode);
+    delete b;
+}
+
+int n;
+void modify(int x, int k, int l, int r, int ry) {
+    int b=ry-(r-dep[x])*k;
+    td[x].push_back({k, b, l-dep[x], r-dep[x]});
+}
+void modifyup(int s, int t, ll &amp;ans) {
+    if(dep[s]&lt;dep[t]) swap(s, t);
+    /* ↑ */
+    ans+=updata(nd[s], 1, n, dep[s], 1);
+    updata(nd2[t], 1, n, dep[s], -1);
+    int bg=dep[s];
+    /* ↓ */
+    while(top[s]!=top[t]) {
+        if(dep[top[s]]&lt;dep[top[t]]) swap(s, t);
+        modify(top[s], -1, dep[top[s]], dep[s], bg-dep[s]);
+        s=fa[top[s]];
+    }
+    if(dep[s]&gt;dep[t]) swap(s, t);
+    modify(top[s], -1, dep[s], dep[t], bg-dep[t]);
+}
+void modifydown(int s, int t, int rua) {
+    int bg=min(dep[s], dep[t]);
+    while(top[s]!=top[t]) {
+        if(dep[top[s]]&lt;dep[top[t]]) swap(s, t);
+        modify(top[s], 1, dep[top[s]], dep[s], dep[s]-bg+rua);
+        s=fa[top[s]];
+    }
+    if(dep[s]&gt;dep[t]) swap(s, t);
+    modify(top[s], 1, dep[s], dep[t], dep[t]-bg+rua);
+}
+
+void dfs(int x, ll &amp;cnt) {
+    for(int u=h[x];u;u=nexp[u])
+        if(to[u]!=fa[x]) {
+            dfs(to[u], cnt);
+            Merge(nd[x], nd[x], nd[to[u]], cnt);
+        }
+    Merge(nd[x], nd[x], nd2[x], cnt, 1);
+}
+
+
+#define lowbit(x) x&amp;-x
+namespace BIT {
+    const int V=N&lt;&lt;2;
+    int C[V], stk[V][2], t;
+    void updata(int x, int v, int mode=0) {
+        if(!mode) stk[++t][0]=x, stk[t][1]=v;
+        while(x&lt;V) C[x]+=v, x+=lowbit(x);
+    }
+    int query(int x) {
+        int ret=0;
+        while(x) ret+=C[x], x-=lowbit(x);
+        return ret;
+    }
+    void clr() {
+        while(t) updata(stk[t][0], -stk[t][1], 1), t--;
+    }
+}
+
+struct Query { int t, v, x, l, r; } ;
+Query tmp[N&lt;&lt;1]; int t;
+bool cmp(const Query &amp;a, const Query &amp;b) { return a.x==b.x?a.t&lt;b.t:a.x&lt;b.x; }
+ll count(int x) {
+    t=0;
+    for(Seg y:td[x]) if(y.k==1) {
+        tmp[++t]={0, 1, 2*y.l+y.b, y.b+(N&lt;&lt;1)};
+        tmp[++t]={2, -1, 2*y.r+y.b, y.b+(N&lt;&lt;1)};
+    }
+    else {
+        tmp[++t]={1, 0, y.b, y.b-2*y.l+(N&lt;&lt;1), y.b-2*y.r+(N&lt;&lt;1)};
+    }
+    sort(tmp+1, tmp+1+t, cmp);
+    ll ret=0; BIT::clr();
+    for(int i=1; i&lt;=t; i++) if(tmp[i].t==1)
+        ret+=BIT::query(tmp[i].l)-BIT::query(tmp[i].r-1);
+    else 
+        BIT::updata(tmp[i].l, tmp[i].v);
+    return ret;
+}
+
+int main() {
+    int u, v;
+    gn(n);
+    for(int i=1; i&lt;n; i++) {
+        gn(u, v);
+        ins(u, i+n), ins(i+n, u);
+        ins(v, i+n), ins(i+n, v);
+    }
+    ini(); dfs1(1, 1), dfs2(1, 1);
+    ll ans=0;
+    int m; gn(m);
+    for(int i=1; i&lt;=m; i++) {
+        gn(u, v); int l=lca(u, v);
+        if(l==v) modifyup(u, v, ans);
+        else {
+            int l2=lca(l, v, 1);
+            modifyup(u, l, ans);
+            modifydown(v, l2, dep[u]-dep[l]+1);
+        }
+    }
+    dfs(1, ans);
+    for(int i=1; i&lt;=2*n-1; i++) if(top[i]==i) ans+=count(i);
+    printf(&quot;%lld\n&quot;, ans);
+    return 0;
+}
+</code></pre>
+                </article>
+
+              </div>
+              
+              <div class="card-action card-action-links">
+                
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86">树链剖分</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%89%AB%E6%8F%8F%E7%BA%BF">扫描线</a> 
+              </div>
+              
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/sol-agc-015-e/" rel="next">AGC015E Mr.Aoki Incubator</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>一道不错<del>相对简单</del>的题目。</p> 
-              <a href="https://i.acxblog.site/posts/sol-uoj-462/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91'>线段树</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E6%A0%91%E5%BD%A2dp'>树形dp</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -396,6 +646,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
