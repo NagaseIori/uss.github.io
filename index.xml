@@ -6,10 +6,19 @@
     <description>Recent content on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 21 Mar 2019 09:50:30 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 21 Mar 2019 22:43:08 +0800</lastBuildDate>
     
 	<atom:link href="https://i.acxblog.site/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SPOJ1812 LCS2</title>
+      <link>https://i.acxblog.site/posts/sol-spoj-1812/</link>
+      <pubDate>Thu, 21 Mar 2019 22:43:08 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/sol-spoj-1812/</guid>
+      <description>&lt;p&gt;浪费了我一晚上的生命&amp;hellip;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Railway</title>

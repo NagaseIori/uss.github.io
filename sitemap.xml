@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://i.acxblog.site/posts/sol-spoj-1812/</loc>
+    <lastmod>2019-03-21T22:43:08+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://i.acxblog.site/posts/sol-jzoj-6074/</loc>
     <lastmod>2019-03-21T09:50:30+08:00</lastmod>
   </url>
@@ -59,7 +64,7 @@
   
   <url>
     <loc>https://i.acxblog.site/</loc>
-    <lastmod>2019-03-21T09:50:30+08:00</lastmod>
+    <lastmod>2019-03-21T22:43:08+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -83,13 +88,19 @@
   
   <url>
     <loc>https://i.acxblog.site/posts/</loc>
-    <lastmod>2019-03-21T09:50:30+08:00</lastmod>
+    <lastmod>2019-03-21T22:43:08+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://i.acxblog.site/tags/sam/</loc>
+    <lastmod>2019-03-21T22:43:08+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://i.acxblog.site/categories/solution/</loc>
-    <lastmod>2019-03-21T09:50:30+08:00</lastmod>
+    <lastmod>2019-03-21T22:43:08+08:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    AGC032C Differ by 1 bit | FantasyAir
+    Sam | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/posts/sol-agc-032-c/" />
+  <link rel="canonical" href="https://i.acxblog.site/tags/sam/" />
 
   
   
@@ -280,19 +280,11 @@
     </li>
   </ul>
   
-
-
-
-
-<main id="single" role="main" class="main-panel">
-  <div class="page-content">
-    <div class="container container-ex">
-      <div class="inner">
-        <section class="post-wrapper">
-          
-          <div class="post reveal  no-toc ">
-            <div class="card">
-              <section class="breadcrumb-root">
+<main id="list" role="main" class="main-panel">
+  <div class="container container-ex">
+  <div class="inner">
+    
+    <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -303,145 +295,64 @@
         
     
       
-    
+    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
         
     
       
-    <span class="breadcrumb">AGC032C Differ by 1 bit</span>
+    <span class="breadcrumb">Sam</span>
 
         
     
       
   </div>
 </section>
+    
+    <div class="waterfall">
+       
+      <div class="waterfall__item">
+        <div class="card post post-summary reveal">
+          <div class="card-header postinfo">
+            <span class="card-title">
+              <a href="https://i.acxblog.site/posts/sol-spoj-1812/">SPOJ1812 LCS2 </a>
+            </span>
+            <div class="card-meta">
+              <time>2019年03月21日</time>
               
-              <div class="card-header postinfo">
-                <span class="card-title">AGC032C Differ by 1 bit </span>
-              </div>
-              <div class="card-header date">
+              <address>
                 
-                <div class="group">
-                  <i class="material-icons">book</i>
-                  <address>
-                    归档：
-                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
-                  </address>
-                </div>
+                <a href='https://i.acxblog.site/categories/solution'>solution</a>
                 
-                <div class="group">
-                  <i class="material-icons">flag</i>
-                  <time>创建：2019年03月17日
-                  </time>
-                </div>
-                
-                
-
-              </div>
+              </address>
               
-              <div class="card-content">
-
-                <article class="article">
-                  <p>有点神的构造，考场上想复杂了&hellip;</p>
-
-<h1 id="solution">Solution</h1>
-
-<p>考虑因为变换 $2^n-1$ 次，那么 $A$ 跟 $B$ 的 $1$ 位数的奇偶性一定不同，用这个来判断是否有解。</p>
-
-<p>通过归纳可以知道如果不同是一定有解的。</p>
-
-<p>假设存在 $n=k$ 的构造方案，考虑如何构造 $k+1$ 位的构造方案。我们可以将 $A$ 和 $B$ 不同的一位（假设是第 $x$ 位）提取出来，剩下 $k$ 位数 $A&rsquo;$ 和 $B&rsquo;$ 。他们的位数奇偶性一定相同。那么我们再考虑一个一位与 $A&rsquo;$ 不同的数 $c$ 。递归去构造一个 $A&rsquo;\rightarrow c \rightarrow B&rsquo;$ 的方案。其中前半部分的第 $x$ 位与 $A$ 相同，后半部分与 $B$ 相同。</p>
-
-<p>递归构造即可。</p>
-
-<h2 id="code">Code</h2>
-
-<pre><code class="language-cpp">// Code by ajcxsu
-// Problem: C
-
-#include&lt;bits/stdc++.h&gt;
-using namespace std;
-
-typedef bitset&lt;10&gt; bs;
-void solve(int k, int a, int b, vector&lt;int&gt; &amp;op) {
-    if(k==1) { op.push_back(a), op.push_back(b); return; }
-    int c=0;
-    vector&lt;int&gt; L, R;
-    for(; ((1&lt;&lt;c)&amp;a)==((1&lt;&lt;c)&amp;b); c++);
-    int na=(a&amp;((1&lt;&lt;c)-1))|((a&amp;((1&lt;&lt;k)-1-((1&lt;&lt;c+1)-1)))&gt;&gt;1);
-    int nb=(b&amp;((1&lt;&lt;c)-1))|((b&amp;((1&lt;&lt;k)-1-((1&lt;&lt;c+1)-1)))&gt;&gt;1);
-    solve(k-1, na, na^1, L);
-    solve(k-1, na^1, nb, R);
-    for(int x:L) op.push_back(((x&amp;((1&lt;&lt;c)-1))|((x&amp;((1&lt;&lt;(k-1))-1-((1&lt;&lt;c)-1)))&lt;&lt;1))|((1&lt;&lt;c)&amp;a));
-    for(int x:R) op.push_back(((x&amp;((1&lt;&lt;c)-1))|((x&amp;((1&lt;&lt;(k-1))-1-((1&lt;&lt;c)-1)))&lt;&lt;1))|((1&lt;&lt;c)&amp;b));
-}
-
-int main() {
-    ios::sync_with_stdio(false), cin.tie(0);
-    int n, a, b;
-    cin&gt;&gt;n&gt;&gt;a&gt;&gt;b;
-    if(!((__builtin_popcount(a)+__builtin_popcount(b))&amp;1)) cout&lt;&lt;&quot;NO\n&quot;, exit(0);
-    vector&lt;int&gt; ans;
-    solve(n, a, b, ans);
-    cout&lt;&lt;&quot;YES\n&quot;;
-    for(int x:ans) cout&lt;&lt;x&lt;&lt;' ';
-    cout&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
-                </article>
-
-              </div>
-              
-              <div class="card-action card-action-links">
-                
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%9E%84%E9%80%A0">构造</a> 
-              </div>
-              
-              <div class="card-action">
-                  
-<div id="comment"></div>
-<style>
-  .v .vwrap .vheader .vinput:focus {
-    border-bottom-color: #607d8b;
-  }
-</style>
-<script>
-  window.VALINECONFIG = {
-    el: '#comment',
-    notify: false,
-    verify: false,
-    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
-    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
-    placeholder: '这里是评论~',
-    path: window.location.pathname,
-    avatar: 'retro'
-  }
-</script>  
-              </div>
-
-              
-              <div class="pagination-single">
-                 
-                <span class="pagination-item previous">
-                  <i class="material-icons">navigate_before</i>
-                  <a href="https://i.acxblog.site/posts/sol-agc-015-e/" rel="prev">AGC015E Mr.Aoki Incubator</a>
-                </span>  
-                
-                
-                <span class="pagination-item next">
-                  <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/" rel="next">Favorite Pixiv Artists</a>
-                  <i class="material-icons">navigate_next</i>
-                </span> 
-              </div>
-              
-
             </div>
           </div>
-        </section>
+
+          <div class="card-content">
+            <article class="article">
+              <p>浪费了我一晚上的生命&hellip;</p> 
+              <a href="https://i.acxblog.site/posts/sol-spoj-1812/" class="readmore">阅读全文</a>
+              
+            </article>
+
+          </div>
+
+          
+          <div class="card-action card-action-links">
+            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/sam'>SAM</a>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="center">
+      <div class="pagination">
+         
+
       </div>
     </div>
   </div>
-  <footer class="page-footer">
+</div> <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -490,7 +401,6 @@ int main() {
   </div>
 </footer>
 </main>
-
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
