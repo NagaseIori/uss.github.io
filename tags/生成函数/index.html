@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    LP4383 林克卡特树 | FantasyAir
+    生成函数 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/posts/sol-luogu-4383/" />
+  <link rel="canonical" href="https://i.acxblog.site/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" />
 
   
   
@@ -298,19 +298,11 @@
     </li>
   </ul>
   
-
-
-
-
-<main id="single" role="main" class="main-panel">
-  <div class="page-content">
-    <div class="container container-ex">
-      <div class="inner">
-        <section class="post-wrapper">
-          
-          <div class="post reveal  no-toc ">
-            <div class="card">
-              <section class="breadcrumb-root">
+<main id="list" role="main" class="main-panel">
+  <div class="container container-ex">
+  <div class="inner">
+    
+    <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -321,195 +313,66 @@
         
     
       
-    
+    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
         
     
       
-    <span class="breadcrumb">LP4383 林克卡特树</span>
+    <span class="breadcrumb">生成函数</span>
 
         
     
       
   </div>
 </section>
+    
+    <div class="waterfall">
+       
+      <div class="waterfall__item">
+        <div class="card post post-summary reveal">
+          <div class="card-header postinfo">
+            <span class="card-title">
+              <a href="https://i.acxblog.site/posts/sol-jzoj-6077/">JZOJ6077 K君的游戏 </a>
+            </span>
+            <div class="card-meta">
+              <time>2019年03月22日</time>
               
-              <div class="card-header postinfo">
-                <span class="card-title">LP4383 林克卡特树 </span>
-              </div>
-              <div class="card-header date">
+              <address>
                 
-                <div class="group">
-                  <i class="material-icons">book</i>
-                  <address>
-                    归档：
-                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
-                  </address>
-                </div>
+                <a href='https://i.acxblog.site/categories/solution'>solution</a>
                 
-                <div class="group">
-                  <i class="material-icons">flag</i>
-                  <time>创建：2019年03月15日
-                  </time>
-                </div>
-                
-                
-
-              </div>
+              </address>
               
-              <div class="card-content">
-
-                <article class="article">
-                  <p>弄了一晚上，几篇博客交换看才看懂。</p>
-
-<p>可能也是因为分心了的缘故。</p>
-
-<h1 id="solution">Solution</h1>
-
-<p>将整棵树分为 $k+1$ 个联通块，对每个联通块找直径，然后直径端点连成一条链一定是最优解。</p>
-
-<p>考虑转化问题，求树上 $k+1$ 条不相交链的最大权和。</p>
-
-<p>设计状态。考虑一个点的度数只可能为 $0/1/2$ 。令 $f_{i, j, k}$ 为第 $i$ 个点，度数为 $j$ ，用了 $k$ 条链的子树最优解。</p>
-
-<p>再具体阐述状态。$f_{i, 0}$ 代表这个点度数为 $0$ ，即在最终的方案中它并不属于直径，因此不占用任何链的个数也不提供任何贡献。 $f_{i, 1}$ 的状态正常。 $f_{i, 2}$ 代表这个点的度数为 $2$ 。那么如果我们想要一个单点成为直径中的一条链，我们就假设是 $i$ 向自己连了自环，度数为 $2$ 且占用了一条链的数目。</p>
-
-<p>那么初始化也就呼之欲出了：$f_{i, 0, 0}=f_{i, 2, 1}=0$ ，其余置为 $-\infty$ 。</p>
-
-<p>转移不难。</p>
-
-<hr />
-
-<p>通过观察（打表）发现对于使用链数为 $k$ 的最优解呈凸函数，使用 <a href="https://www.luogu.org/blog/EternalAlexander/solution-p4383">凸优化dp</a> 来去除 $k$ 的限制。</p>
-
-<p>注意我们是对<strong>每条链</strong>产生的贡献减去斜率而不是对<strong>每条边</strong>。</p>
-
-<p>那么初始的dp去除第三维来做就行了。</p>
-
-<p>但是凸函数可能会出现你要找的点和前后两点处于同一直线。那么此时应当二分到该直线的斜率，并使用斜率和 $k$ 来直接求出 $k$ 的最优值。</p>
-
-<h2 id="code">Code</h2>
-
-<pre><code class="language-cpp">// Code by ajcxsu
-// Problem: linke kate shu
-
-#include&lt;bits/stdc++.h&gt;
-#define INF (0x7fffffff)
-using namespace std;
-
-template&lt;typename T&gt; inline void gn (T &amp;x) {
-    char ch=getchar(), pl=0; x=0;
-    while(!isdigit(ch)) pl=ch=='-', ch=getchar();
-    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
-}
-template&lt;typename T, typename ...Args&gt; inline void gn (T &amp;x, Args &amp;...args) {
-    gn(x), gn(args...);
-}
-
-const int N=3e5+10, M=N&lt;&lt;1;
-typedef long long ll;
-struct Data {
-    ll x; int k;
-    friend bool operator &lt; (const Data &amp;a, const Data &amp;b) { return a.x==b.x?(a.k&lt;b.k):a.x&lt;b.x; }
-    Data operator + (const Data &amp;b) { return {x+b.x, k+b.k}; }
-} f[3][N], tmp[3];
-int h[N], to[M], nexp[M], p=1;
-ll W[M], rw[M];
-inline void ins(int a, int b, int w) { nexp[p]=h[a], h[a]=p, to[p]=b, W[p]=w, p++; }
-ll delta;
-void dfs(int x, int fr) {
-    for(int u=h[x];u;u=nexp[u])
-        if(to[u]!=fr) {
-            dfs(to[u], x);
-            for(int i=0; i&lt;3; i++) tmp[i]={-(1ll&lt;&lt;60), 0x3f3f3f3f};
-            for(int i=0; i&lt;3; i++) tmp[0]=max(tmp[0], f[0][x]+f[i][to[u]]);
-            tmp[1]=max(f[0][x]+f[0][to[u]]+(Data){W[u]-delta, 1}, f[0][x]+f[1][to[u]]+(Data){W[u], 0});
-            for(int i=0; i&lt;3; i++) tmp[1]=max(tmp[1], f[1][x]+f[i][to[u]]);
-            tmp[2]=max(f[1][x]+f[0][to[u]]+(Data){W[u], 0}, f[1][x]+f[1][to[u]]+(Data){W[u]+delta, -1});
-            for(int i=0; i&lt;3; i++) tmp[2]=max(tmp[2], f[2][x]+f[i][to[u]]);
-            for(int i=0; i&lt;3; i++) f[i][x]=tmp[i];
-        }
-}
-
-int n;
-int check(ll v) {
-    delta=v;
-    for(int i=1; i&lt;=n; i++) f[0][i]={0, 0}, f[1][i]={-(1ll&lt;&lt;60), 0x3f3f3f3f}, f[2][i]={-v, 1};
-    dfs(1, 0);
-    return max({f[0][1], f[1][1], f[2][1]}).k;
-}
-
-int main() {
-    int k;
-    gn(n), gn(k); k++;
-    int u, v, w;
-    ll l=0, r=0, mid, ans=-INF;
-    for(int i=0; i&lt;n-1; i++) gn(u, v, w), ins(u, v, w), ins(v, u, w), r+=abs(w);
-    l=-r;
-    memcpy(rw, W, sizeof(W));
-    while(l&lt;=r) {
-        mid=(l+r)&gt;&gt;1;
-        if(check(mid)&gt;=k) l=mid+1, ans=mid;
-        else r=mid-1;
-    }
-    check(ans);
-    printf(&quot;%lld\n&quot;, max({f[0][1], f[1][1], f[2][1]}).x+ans*k);
-    return 0;
-}
-</code></pre>
-                </article>
-
-              </div>
-              
-              <div class="card-action card-action-links">
-                
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%87%B8%E4%BC%98%E5%8C%96dp">凸优化DP</a> 
-              </div>
-              
-              <div class="card-action">
-                  
-<div id="comment"></div>
-<style>
-  .v .vwrap .vheader .vinput:focus {
-    border-bottom-color: #607d8b;
-  }
-</style>
-<script>
-  window.VALINECONFIG = {
-    el: '#comment',
-    notify: false,
-    verify: false,
-    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
-    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
-    placeholder: '这里是评论~',
-    path: window.location.pathname,
-    avatar: 'retro'
-  }
-</script>  
-              </div>
-
-              
-              <div class="pagination-single">
-                 
-                <span class="pagination-item previous">
-                  <i class="material-icons">navigate_before</i>
-                  <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/" rel="prev">Favorite Pixiv Artists</a>
-                </span>  
-                
-                
-                <span class="pagination-item next">
-                  <a href="https://i.acxblog.site/posts/sol-uoj-462/" rel="next">UOJ462 新年的小黄鸭</a>
-                  <i class="material-icons">navigate_next</i>
-                </span> 
-              </div>
-              
-
             </div>
           </div>
-        </section>
+
+          <div class="card-content">
+            <article class="article">
+              <p>⭐</p> 
+              <a href="https://i.acxblog.site/posts/sol-jzoj-6077/" class="readmore">阅读全文</a>
+              
+            </article>
+
+          </div>
+
+          
+          <div class="card-action card-action-links">
+            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E6%95%B0%E5%AD%A6'>数学</a>
+            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0'>生成函数</a>
+            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F'>多项式</a>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    <div class="center">
+      <div class="pagination">
+         
+
       </div>
     </div>
   </div>
-  <footer class="page-footer">
+</div> <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -558,7 +421,6 @@ int main() {
   </div>
 </footer>
 </main>
-
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>

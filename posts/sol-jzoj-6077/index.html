@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    LP4383 林克卡特树 | FantasyAir
+    JZOJ6077 K君的游戏 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/posts/sol-luogu-4383/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6077/" />
 
   
   
@@ -308,7 +308,19 @@
       <div class="inner">
         <section class="post-wrapper">
           
-          <div class="post reveal  no-toc ">
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
             <div class="card">
               <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
@@ -325,7 +337,7 @@
         
     
       
-    <span class="breadcrumb">LP4383 林克卡特树</span>
+    <span class="breadcrumb">JZOJ6077 K君的游戏</span>
 
         
     
@@ -334,7 +346,7 @@
 </section>
               
               <div class="card-header postinfo">
-                <span class="card-title">LP4383 林克卡特树 </span>
+                <span class="card-title">JZOJ6077 K君的游戏 </span>
               </div>
               <div class="card-header date">
                 
@@ -348,7 +360,7 @@
                 
                 <div class="group">
                   <i class="material-icons">flag</i>
-                  <time>创建：2019年03月15日
+                  <time>创建：2019年03月22日
                   </time>
                 </div>
                 
@@ -359,100 +371,112 @@
               <div class="card-content">
 
                 <article class="article">
-                  <p>弄了一晚上，几篇博客交换看才看懂。</p>
+                  <p>⭐</p>
 
-<p>可能也是因为分心了的缘故。</p>
+<h1 id="problem">Problem</h1>
+
+<p>一个博弈游戏：给定一棵有根树，放一个石子在根节点，轮流执手，每次往任意叶子节点方向移一步，不能移则为输。</p>
+
+<p>现在给你 $n$ 个点，生成任意一棵有根树，问先手获胜的概率。有 $q$ 次询问。</p>
+
+<p>$n,q \leq 10^5$</p>
 
 <h1 id="solution">Solution</h1>
 
-<p>将整棵树分为 $k+1$ 个联通块，对每个联通块找直径，然后直径端点连成一条链一定是最优解。</p>
+<p>令 $f(x), g(x)$ 分别为后手和先手必胜的 EGF ，则 $f(x)+g(x)=\sum \frac{(i-1)!}{i!}x^i$ 。所以有 $g(x)=-ln(1-x)-f(x)$ 。其中 $(i-1)!$ 为无标号有根树的方案数，$\sum \frac{(-1)^{i+1}}{i}x^i$ 为 $ln(x+1)$ 的麦克劳林级数。</p>
 
-<p>考虑转化问题，求树上 $k+1$ 条不相交链的最大权和。</p>
+<p>根据SG函数，因为后手必胜的子树皆为先手必胜，那么有 $xe^{g(x)}=f(x)$ 。解方程得 $f(x)=ln(1-ln(1-x))$ 。并不知道过程。</p>
 
-<p>设计状态。考虑一个点的度数只可能为 $0/1/2$ 。令 $f_{i, j, k}$ 为第 $i$ 个点，度数为 $j$ ，用了 $k$ 条链的子树最优解。</p>
-
-<p>再具体阐述状态。$f_{i, 0}$ 代表这个点度数为 $0$ ，即在最终的方案中它并不属于直径，因此不占用任何链的个数也不提供任何贡献。 $f_{i, 1}$ 的状态正常。 $f_{i, 2}$ 代表这个点的度数为 $2$ 。那么如果我们想要一个单点成为直径中的一条链，我们就假设是 $i$ 向自己连了自环，度数为 $2$ 且占用了一条链的数目。</p>
-
-<p>那么初始化也就呼之欲出了：$f_{i, 0, 0}=f_{i, 2, 1}=0$ ，其余置为 $-\infty$ 。</p>
-
-<p>转移不难。</p>
-
-<hr />
-
-<p>通过观察（打表）发现对于使用链数为 $k$ 的最优解呈凸函数，使用 <a href="https://www.luogu.org/blog/EternalAlexander/solution-p4383">凸优化dp</a> 来去除 $k$ 的限制。</p>
-
-<p>注意我们是对<strong>每条链</strong>产生的贡献减去斜率而不是对<strong>每条边</strong>。</p>
-
-<p>那么初始的dp去除第三维来做就行了。</p>
-
-<p>但是凸函数可能会出现你要找的点和前后两点处于同一直线。那么此时应当二分到该直线的斜率，并使用斜率和 $k$ 来直接求出 $k$ 的最优值。</p>
+<p>所以可以得到最终的概率：$\frac{(n-1)!-n!f_n}{(n-1)!}=1-nf_n$ 。</p>
 
 <h2 id="code">Code</h2>
 
-<pre><code class="language-cpp">// Code by ajcxsu
-// Problem: linke kate shu
-
-#include&lt;bits/stdc++.h&gt;
-#define INF (0x7fffffff)
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+#define MOD (998244353)
 using namespace std;
 
-template&lt;typename T&gt; inline void gn (T &amp;x) {
-    char ch=getchar(), pl=0; x=0;
-    while(!isdigit(ch)) pl=ch=='-', ch=getchar();
-    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
-}
-template&lt;typename T, typename ...Args&gt; inline void gn (T &amp;x, Args &amp;...args) {
-    gn(x), gn(args...);
+const int N=4e5+10;
+int f[N], g[N], h[N], r[N], n;
+
+void gen(int m) {
+    int l=0;
+    for(n=1; n&lt;=m; n&lt;&lt;=1) l++;
+    for(int i=1; i&lt;n; i++) r[i]=(r[i&gt;&gt;1]&gt;&gt;1)|((i&amp;1)&lt;&lt;(l-1));
 }
 
-const int N=3e5+10, M=N&lt;&lt;1;
-typedef long long ll;
-struct Data {
-    ll x; int k;
-    friend bool operator &lt; (const Data &amp;a, const Data &amp;b) { return a.x==b.x?(a.k&lt;b.k):a.x&lt;b.x; }
-    Data operator + (const Data &amp;b) { return {x+b.x, k+b.k}; }
-} f[3][N], tmp[3];
-int h[N], to[M], nexp[M], p=1;
-ll W[M], rw[M];
-inline void ins(int a, int b, int w) { nexp[p]=h[a], h[a]=p, to[p]=b, W[p]=w, p++; }
-ll delta;
-void dfs(int x, int fr) {
-    for(int u=h[x];u;u=nexp[u])
-        if(to[u]!=fr) {
-            dfs(to[u], x);
-            for(int i=0; i&lt;3; i++) tmp[i]={-(1ll&lt;&lt;60), 0x3f3f3f3f};
-            for(int i=0; i&lt;3; i++) tmp[0]=max(tmp[0], f[0][x]+f[i][to[u]]);
-            tmp[1]=max(f[0][x]+f[0][to[u]]+(Data){W[u]-delta, 1}, f[0][x]+f[1][to[u]]+(Data){W[u], 0});
-            for(int i=0; i&lt;3; i++) tmp[1]=max(tmp[1], f[1][x]+f[i][to[u]]);
-            tmp[2]=max(f[1][x]+f[0][to[u]]+(Data){W[u], 0}, f[1][x]+f[1][to[u]]+(Data){W[u]+delta, -1});
-            for(int i=0; i&lt;3; i++) tmp[2]=max(tmp[2], f[2][x]+f[i][to[u]]);
-            for(int i=0; i&lt;3; i++) f[i][x]=tmp[i];
-        }
-}
-
-int n;
-int check(ll v) {
-    delta=v;
-    for(int i=1; i&lt;=n; i++) f[0][i]={0, 0}, f[1][i]={-(1ll&lt;&lt;60), 0x3f3f3f3f}, f[2][i]={-v, 1};
-    dfs(1, 0);
-    return max({f[0][1], f[1][1], f[2][1]}).k;
-}
-
-int main() {
-    int k;
-    gn(n), gn(k); k++;
-    int u, v, w;
-    ll l=0, r=0, mid, ans=-INF;
-    for(int i=0; i&lt;n-1; i++) gn(u, v, w), ins(u, v, w), ins(v, u, w), r+=abs(w);
-    l=-r;
-    memcpy(rw, W, sizeof(W));
-    while(l&lt;=r) {
-        mid=(l+r)&gt;&gt;1;
-        if(check(mid)&gt;=k) l=mid+1, ans=mid;
-        else r=mid-1;
+int qpow(int x, int y) {
+    assert(y&gt;=0);
+    int ret=1;
+    while(y) {
+        if(y&amp;1) ret=1ll*ret*x%MOD;
+        x=1ll*x*x%MOD, y&gt;&gt;=1;
     }
-    check(ans);
-    printf(&quot;%lld\n&quot;, max({f[0][1], f[1][1], f[2][1]}).x+ans*k);
+    return ret;
+}
+
+void dft(int x[], int d) {
+    for(int i=1; i&lt;n; i++) if(r[i]&gt;i) swap(x[i], x[r[i]]);
+    int t, w, o;
+    for(int i=1; i&lt;n; i&lt;&lt;=1) {
+        o=qpow(3, d*(MOD-1)/(i&lt;&lt;1)+MOD-1);
+        for(int j=0; j&lt;n; j+=(i&lt;&lt;1)) {
+            w=1;
+            for(int k=0; k&lt;i; k++, w=1ll*w*o%MOD)
+                t=1ll*x[i+j+k]*w%MOD, x[i+j+k]=(x[j+k]-t+MOD)%MOD,
+                (x[j+k]+=t)%=MOD;
+        }
+    }
+}
+
+void mul(int x[], int y[], int z[], int m, int mode=0) {
+    gen(m&lt;&lt;1);
+    int a[N]={0}, b[N]={0};
+    copy(x, x+m, a), copy(y, y+m, b);
+    dft(a, 1), dft(b, 1);
+    for(int i=0; i&lt;n; i++)
+        if(!mode) a[i]=1ll*a[i]*b[i]%MOD;
+        else a[i]=(2ll*b[i]-1ll*a[i]*b[i]%MOD*b[i]%MOD+MOD)%MOD;
+    dft(a, -1);
+    int inv=qpow(n, MOD-2); for(int i=0; i&lt;m; i++) z[i]=1ll*a[i]*inv%MOD;
+}
+
+void inv(int a[], int f[], int deg) {
+    assert(deg&gt;0);
+    if(deg==1) { f[0]=qpow(a[0]%MOD, MOD-2); return; }
+    inv(a, f, (deg+1)&gt;&gt;1);
+    mul(a, f, f, deg, 1);
+}
+
+void deri(int x[], int n) {
+    for(int i=0; i&lt;n; i++) x[i]=1ll*(i+1)*x[i+1]%MOD;
+    x[n-1]=0;
+}
+void inte(int x[], int n) {
+    for(int i=n-1; i&gt;0; i--) x[i]=1ll*x[i-1]*qpow(i, MOD-2)%MOD;
+    x[0]=0;
+}
+void pln(int x[], int y[], int n) {
+    int a[N]={0}, b[N]={0}; copy(x, x+n, a);
+    inv(a, b, n);
+    deri(a, n);
+    mul(a, b, a, n);
+    inte(a, n);
+    for(int i=0; i&lt;n; i++) y[i]=a[i];
+}
+int main() {
+    ios::sync_with_stdio(false), cin.tie(0);
+    int n=1e5+10;
+    f[0]=1, f[1]=MOD-1;
+    pln(f, g, n);
+    for(int i=0; i&lt;n; i++) g[i]=(MOD-g[i])%MOD;
+    g[0]++;
+    pln(g, h, n);
+    int q;
+    cin&gt;&gt;q;
+    while(q--) {
+        int na; cin&gt;&gt;na;
+        cout&lt;&lt;(1-1ll*na*h[na]%MOD+MOD)%MOD&lt;&lt;'\n';
+    }
     return 0;
 }
 </code></pre>
@@ -462,7 +486,9 @@ int main() {
               
               <div class="card-action card-action-links">
                 
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%87%B8%E4%BC%98%E5%8C%96dp">凸优化DP</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%95%B0%E5%AD%A6">数学</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0">生成函数</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F">多项式</a> 
               </div>
               
               <div class="card-action">
@@ -490,14 +516,10 @@ int main() {
               
               <div class="pagination-single">
                  
-                <span class="pagination-item previous">
-                  <i class="material-icons">navigate_before</i>
-                  <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/" rel="prev">Favorite Pixiv Artists</a>
-                </span>  
                 
                 
                 <span class="pagination-item next">
-                  <a href="https://i.acxblog.site/posts/sol-uoj-462/" rel="next">UOJ462 新年的小黄鸭</a>
+                  <a href="https://i.acxblog.site/posts/sol-spoj-1812/" rel="next">SPOJ1812 LCS2</a>
                   <i class="material-icons">navigate_next</i>
                 </span> 
               </div>
