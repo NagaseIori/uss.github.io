@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    AGC015E Mr.Aoki Incubator | FantasyAir
+    JZOJ6080 IOer | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/posts/sol-agc-015-e/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6080/" />
 
   
   
@@ -308,7 +308,18 @@
       <div class="inner">
         <section class="post-wrapper">
           
-          <div class="post reveal  no-toc ">
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
             <div class="card">
               <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
@@ -325,7 +336,7 @@
         
     
       
-    <span class="breadcrumb">AGC015E Mr.Aoki Incubator</span>
+    <span class="breadcrumb">JZOJ6080 IOer</span>
 
         
     
@@ -334,7 +345,7 @@
 </section>
               
               <div class="card-header postinfo">
-                <span class="card-title">AGC015E Mr.Aoki Incubator </span>
+                <span class="card-title">JZOJ6080 IOer </span>
               </div>
               <div class="card-header date">
                 
@@ -348,13 +359,7 @@
                 
                 <div class="group">
                   <i class="material-icons">flag</i>
-                  <time>创建：2019年03月20日
-                  </time>
-                </div>
-                
-                <div class="group">
-                  <i class="material-icons">mode_edit</i>
-                  <time>修改：2019年03月20日
+                  <time>创建：2019年03月23日
                   </time>
                 </div>
                 
@@ -365,70 +370,94 @@
               <div class="card-content">
 
                 <article class="article">
-                  <p>有点难&hellip;</p>
+                  <p>好题好做法&hellip;</p>
+
+<p>感谢 gjx 的讲解。</p>
 
 <h1 id="solution">Solution</h1>
 
-<p>网上已经讲得很详细了吧？</p>
+<p>要用到的结论： $\frac{1}{a}\frac{1}{b}=(\frac{1}{a}-\frac{1}{b})\frac{1}{b-a}$ 。</p>
 
-<p>补充几个问题。一是可以直接 <code>$f_{R}=\sum \limits_{j=L-1}^R f_j$</code> 进行转移。但是得注意先转移大区间再转移小区间（这属于被部分包含），否则的话你可能会丢失不选小区间的决策。</p>
+<p>我们要求的就是下面这个生成函数的第 $n$ 项：
+$$\prod \limits_{i=1}^{m} \frac{1}{1-(ui+v)x}$$</p>
 
-<p>第二个问题是若速度可以相等，那么需要将开始的排序进行一些小修改。考虑 <code>$X_i$</code> 的左端比它大的最小的 <code>$j$</code> ，若有数个 <code>$V_k$</code> 等于 <code>$V_j$</code> ，那么这些 <code>$V_k$</code> 的点是肯定不能被染色的。右侧同理。</p>
+<p>上面这个生成函数可以化为这样的形式：
+<code>$$(\frac{1}{ux})^{m-1} \sum \limits_{i=1}^m \frac{a_i}{1-(ui-v)x}$$</code></p>
+
+<p>其中 $a_i$ 是该项的不定系数。</p>
+
+<p>至于为什么是这样，我们下面继续。</p>
+
+<p>令 <code>$p_i=1-(ui+v)x$</code> 。我们从 $1\to m$ 处理这个生成函数，即假设我们已经求出了  $1\to m$ 的生成函数，然后我们要把这个函数乘上一个 <code>$\frac{1}{p_{m+1}}$</code> 来推出 $1\to m+1$ 的生成函数。</p>
+
+<p>那我们考虑对于第二种形式的生成函数的每个 $i$ ，乘上这个之后的变化。</p>
+
+<p>即：
+<code>$$\frac{a_i}{p_i}\frac{1}{p_{m+1}} = a_i(\frac{1}{p_i}-\frac{1}{p_{m+1}})\frac{1}{u(i-m-1)x}$$</code></p>
+
+<p>此时我们发现对于每一项都会多乘上一个 $\frac{1}{ux}$ ，因此我们可以将其整体提出，变成上面生成函数的形式。</p>
+
+<p>我们考虑第一次插入 <code>$\frac{1}{p_{i}}$</code> 这一项之后，令它的系数为 <code>$f_i$</code> 。那么在插入 $i+1$ 项时，<code>$f_i$</code> 会乘上一个 $\frac{1}{ux(-1)}$ ，插入第 $i+2$ 项时会乘上一个 $\frac{1}{ux(-2)}$ 。我们惊讶的发现有：
+<code>$$a_i=(\frac{1}{ux})^{m-i}(-1)^{m-i}\frac{1}{(m-i)!}f_i$$</code></p>
+
+<p>再考虑 <code>$f_{m+1}$</code> 的值：
+<code>$$f_{m+1}=\sum \limits_{i=1}^{m} (-1)^{m-i}\frac{1}{(m+1-i)!}f_i$$</code></p>
+
+<p>我们考虑 $f_i$ 的生成函数为 $F$ ，则有：
+<code>$$F=F*(-e^{-x}+1)+x \Rightarrow F=xe^x$$</code></p>
+
+<p>则我们可以得到最终生成函数的每一部分的第 $n$ 项的和：
+<code>$$\sum \limits_{i=1}^{m} (ui+v)^{n+m-1} u^{-m+1} (-1)^{m-i} \frac{1}{(m-i)!} f_i$$</code></p>
+
+<p>复杂度 $O(m\log n)$ 。</p>
 
 <h2 id="code">Code</h2>
 
 <pre><code class="language-cpp">// Code by ajcxsu
+// Problem: IOer
 
 #include&lt;bits/stdc++.h&gt;
-#define MOD (1000000007)
+#define MOD (998244353ll)
 using namespace std;
 
-const int N=5e5+10;
-int h[N], l[N], r[N];
-vector&lt;int&gt; L[N];
-int x[N], v[N], a[N];
-bool cmp(const int &amp;a, const int &amp;b) { return v[a]&lt;v[b] || (v[a]==v[b] &amp;&amp; x[a]&lt;x[b]); }
-int f[N], S[N];
+template&lt;typename T&gt; inline void gn(T &amp;x) {
+    char ch=getchar(), pl=0; x=0;
+    while(!isdigit(ch)) pl=(ch=='-'), ch=getchar();
+    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
+}
+
+const int N=2e5+10;
+typedef long long ll;
+ll finv[N], f[N];
+ll qpow(ll x, ll y) {
+    ll ret=1;
+    while(y) {
+        if(y&amp;1) ret=ret*x%MOD;
+        x=x*x%MOD, y&gt;&gt;=1;
+    }
+    return ret;
+}
+ll n, m, u, v;
+ll pl[]={1, -1};
+int solve() {
+    int ans=0;
+    ll invu=qpow(u, (MOD-2)*(m-1));
+    for(int i=1; i&lt;=m; i++)
+        ans=(ans+qpow((u*i+v)%MOD, n+m-1)*invu%MOD*f[i]%MOD*pl[(m-i)&amp;1]*finv[m-i]%MOD+MOD)%MOD;
+    return ans;
+}
 
 int main() {
-    ios::sync_with_stdio(false), cin.tie(0);
-    int n, m;
-    cin&gt;&gt;n;
-    for(int i=1; i&lt;=n; i++) cin&gt;&gt;x[i]&gt;&gt;v[i], a[i]=i;
-    sort(a+1, a+1+n, cmp);
-    int stk[N], p[N], t=0;
-    for(int i=1; i&lt;=n; i++) {
-        if(!t || stk[t]&lt;x[a[i]]) stk[++t]=x[a[i]], p[t]=i;
-        int l=1, r=t, mid;
-        while(l&lt;r) {
-            mid=(l+r)&gt;&gt;1;
-            if(stk[mid]&lt;x[a[i]]) l=mid+1;
-            else r=mid;
-        }
-        ::l[i]=p[r];
+    finv[0]=finv[1]=1;
+    for(int i=2; i&lt;N; i++) finv[i]=MOD-1ll*MOD/i*finv[MOD%i]%MOD;
+    for(int i=2; i&lt;N; i++) finv[i]=finv[i]*finv[i-1]%MOD;
+    for(int i=0; i&lt;N-1; i++) f[i+1]=finv[i];
+    int T;
+    gn(T);
+    while(T--) {
+        gn(n), gn(m), gn(u), gn(v);
+        printf(&quot;%d\n&quot;, solve());
     }
-    t=0;
-    for(int i=n; i&gt;=1; i--) {
-        if(!t || stk[t]&gt;x[a[i]]) stk[++t]=x[a[i]], p[t]=i;
-        int l=1, r=t, mid;
-        while(l&lt;r) {
-            mid=(l+r)&gt;&gt;1;  
-            if(stk[mid]&gt;x[a[i]]) l=mid+1;
-            else r=mid;
-        }
-        ::r[i]=p[r];
-    }
-    for(int i=1; i&lt;=n; i++) L[r[i]].push_back(l[i]);
-    f[0]=S[0]=1;
-    for(int i=1; i&lt;=n; i++) {
-        S[i]=S[i-1];
-        sort(L[i].begin(), L[i].end());
-        for(int j:L[i]) {
-            f[i]=(1ll*f[i]+S[i]-(j-2&gt;=0?S[j-2]:0)+MOD)%MOD;
-            S[i]=(f[i]+S[i-1])%MOD;
-        }
-    }
-    cout&lt;&lt;f[n]&lt;&lt;endl;
     return 0;
 }
 </code></pre>
@@ -438,9 +467,8 @@ int main() {
               
               <div class="card-action card-action-links">
                 
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%8D%95%E8%B0%83%E6%A0%88">单调栈</a> 
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/dp">DP</a> 
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E4%BA%8C%E5%88%86">二分</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%95%B0%E5%AD%A6">数学</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0">生成函数</a> 
               </div>
               
               <div class="card-action">
@@ -468,14 +496,10 @@ int main() {
               
               <div class="pagination-single">
                  
-                <span class="pagination-item previous">
-                  <i class="material-icons">navigate_before</i>
-                  <a href="https://i.acxblog.site/posts/sol-jzoj-6074/" rel="prev">Railway</a>
-                </span>  
                 
                 
                 <span class="pagination-item next">
-                  <a href="https://i.acxblog.site/posts/sol-agc-032-c/" rel="next">AGC032C Differ by 1 bit</a>
+                  <a href="https://i.acxblog.site/posts/sol-jzoj-6077/" rel="next">JZOJ6077 K君的游戏</a>
                   <i class="material-icons">navigate_next</i>
                 </span> 
               </div>
