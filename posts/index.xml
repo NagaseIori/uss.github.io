@@ -6,10 +6,19 @@
     <description>Recent content in Posts on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 28 Mar 2019 09:27:57 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2019 15:05:00 +0800</lastBuildDate>
     
 	<atom:link href="https://i.acxblog.site/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>凸包与旋转卡壳</title>
+      <link>https://i.acxblog.site/posts/convex-hull-and-qia-qiao/</link>
+      <pubDate>Thu, 28 Mar 2019 15:05:00 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/convex-hull-and-qia-qiao/</guid>
+      <description>&lt;p&gt;qia ke 还是 ka qiao ？&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>JZOJ2090 圆</title>
