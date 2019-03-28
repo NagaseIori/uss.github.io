@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    二分 | FantasyAir
+    JZOJ6086 动态半平面交 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/%E4%BA%8C%E5%88%86/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6086/" />
 
   
   
@@ -334,11 +334,30 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -349,66 +368,267 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">二分</span>
+    <span class="breadcrumb">JZOJ6086 动态半平面交</span>
 
         
     
       
   </div>
 </section>
+              
+              <div class="card-header postinfo">
+                <span class="card-title">JZOJ6086 动态半平面交 </span>
+              </div>
+              <div class="card-header date">
+                
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
+                  </address>
+                </div>
+                
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2019年03月28日
+                  </time>
+                </div>
+                
+                
+
+              </div>
+              
+              <div class="card-content">
+
+                <article class="article">
+                  <p>常数制造机&hellip;</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>考虑不重复的计算质因数。令 ${p_i}^{k_i}$ 形式的质因数成为一种颜色，贡献为 $p$ ，则最多可分割出 $n\log V$ 种颜色，现在要做的是对限定深度不重复计算颜色的贡献。</p>
+
+<p>那么对深度设主席树（每一层的话是动态开点），然后对每个颜色计算树上差分进行贡献。同时对于每个颜色记录一个 set 来维护已出现 dfn 序，如果新加入了一个颜色在树上计算与 dfs 序相邻的已出现的点的贡献的变化量。查询的时候直接在主席树上查询即可。</p>
+
+<p>复杂度大概是 $\log^2$ 级别？空间复杂度是玄学&hellip;</p>
+
+<h2 id="code">Code</h2>
+
+<pre><code class="language-cpp">// Code by ajcxsu
+// Problem: half
+
+#include&lt;bits/stdc++.h&gt;
+#define MOD (998244353)
+using namespace std;
+
+template&lt;typename T&gt; inline void gn(T &amp;x) {
+    char ch=getchar(), pl=0; x=0;
+    while(!isdigit(ch)) pl=ch=='-', ch=getchar();
+    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
+}
+template&lt;typename T, typename ...Args&gt; inline void gn(T &amp;x, Args &amp;...args) {
+    gn(x), gn(args...);
+}
+
+const int K=1e7+10, N=1e5+10, OP=19;
+int h[N], to[N&lt;&lt;1], nexp[N&lt;&lt;1], p=1;
+inline void ins(int a, int b) { nexp[p]=h[a], h[a]=p, to[p]=b, p++; }
+
+typedef pair&lt;int, int&gt; mpa;
+int dep[N], dl[N], dr[N], dd[N], idx;
+int gup[OP][N];
+void dfs(int x, int k) {
+    dep[x]=k, dl[x]=++idx, dd[idx]=x;
+    for(int u=h[x];u;u=nexp[u])
+        if(!dep[to[u]]) {
+            dfs(to[u], k+1);
+            gup[0][to[u]]=x;
+        }
+    dr[x]=idx;
+}
+int lca(int s, int t) {
+    if(dep[s]&lt;dep[t]) swap(s, t);
+    for(int j=OP-1; j&gt;=0; j--) if(dep[gup[j][s]]&gt;=dep[t]) s=gup[j][s];
+    if(s==t) return s;
+    for(int j=OP-1; j&gt;=0; j--)
+        if(gup[j][s]!=gup[j][t]) s=gup[j][s], t=gup[j][t];
+    return gup[0][s];
+}
+
+
+struct Dot { int x, k, i; } ;
+bool cmp(const Dot &amp;a, const Dot &amp;b) { return dep[a.x]&lt;dep[b.x]; }
+vector&lt;Dot&gt; dot;
+vector&lt;mpa&gt; lis;
+int val[N];
+int pri[K], pre[K], inv[K], pp;
+bool npri[K];
+void di(int x, int y) {
+    int k=0, rua=0;
+    while(x&gt;1) {
+        if(rua!=pre[x]) rua=pre[x], k=0;
+        k++;
+        lis.push_back(mpa(rua, k));
+        dot.push_back({y, rua, k});
+        x/=rua;
+    }
+}
+
+struct Node *nil;
+struct Node {
+    Node *ls=nil, *rs=nil;
+    int v=1, t=0;
+} ;
+Node *nd[N];
+void ini() {
+    nil=new Node, nil-&gt;ls=nil-&gt;rs=nil; 
+    nd[0]=nil;
+}
+void updata(Node *&amp;x, int l, int r, int d, int v, int nt) {
+    if(x-&gt;t!=nt) {
+        Node *nd=new Node; *nd=*x, x=nd;
+        x-&gt;t=nt;
+    }
+    x-&gt;v=1ll*x-&gt;v*v%MOD;
+    if(l==r) return; int mid=(l+r)&gt;&gt;1;
+    if(d&lt;=mid) updata(x-&gt;ls, l, mid, d, v, nt);
+    else updata(x-&gt;rs, mid+1, r, d, v, nt);
+}
+int query(Node *x, int l, int r, int xl, int xr) {
+    if(xl&lt;=l &amp;&amp; r&lt;=xr) return x-&gt;v;
+    int mid=(l+r)&gt;&gt;1, ret=1;
+    if(xl&lt;=mid) ret=1ll*ret*query(x-&gt;ls, l, mid, xl, xr)%MOD;
+    if(xr&gt;mid) ret=1ll*ret*query(x-&gt;rs, mid+1, r, xl, xr)%MOD;
+    return ret;
+}
+
+set&lt;int&gt; s[N*25];
+int main() {
+    #ifndef LOCAL
+    freopen(&quot;half.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;half.out&quot;,&quot;w&quot;,stdout);
+    #endif
+    ini();
+    ios::sync_with_stdio(false), cin.tie(0);
+    /* pri inv */
+    inv[1]=1; for(int i=2; i&lt;K; i++) inv[i]=(MOD-1ll*MOD/i*inv[MOD%i]%MOD);
+    npri[1]=1;
+    for(int i=2; i&lt;K; i++) {
+        if(!npri[i]) pri[pp++]=i, pre[i]=i;
+        for(int j=0; j&lt;pp &amp;&amp; i*pri[j]&lt;K; j++) {
+            npri[i*pri[j]]=1, pre[i*pri[j]]=pri[j];
+            if(i%pri[j]==0) break;
+        }
+    }
+    /* input */
+    int k, n;
+    gn(k), gn(n);
+    int na;
+    for(int i=1; i&lt;=n; i++) {
+        gn(na);
+        di(na, i);
+    }
+    int u, v;
+    for(int i=1; i&lt;n; i++) gn(u), gn(v), ins(u, v), ins(v, u);
+    /* up */
+    dfs(1, 1);
+    for(int j=1; j&lt;OP; j++)
+        for(int i=1; i&lt;=n; i++)
+            gup[j][i]=gup[j-1][gup[j-1][i]];
+    /* lis */
+    sort(lis.begin(), lis.end()); int tk=unique(lis.begin(), lis.end())-lis.begin();
+
+    for(int i=0; i&lt;tk; i++) val[i]=lis[i].first;
+    for(Dot &amp;x:dot)
+        x.k=lower_bound(lis.begin(), lis.begin()+tk, mpa(x.k, x.i))-lis.begin();
+    sort(dot.begin(), dot.end(), cmp);
+    /* add */
+    int j=0;
+    int nx, nc, mdep=dep[dot.rbegin()-&gt;x];
+    for(int i=1; i&lt;=mdep; i++) {
+        nd[i]=nd[i-1];
+        while(j&lt;dot.size() &amp;&amp; dep[dot[j].x]&lt;=i) {
+            nx=dot[j].x, nc=dot[j].k;
+            auto it=s[nc].lower_bound(dl[nx]);
+            int rx=(it==s[nc].end()?-1:dd[*it]);
+            int lx=(it==s[nc].begin()?-1:dd[*(--it)]);
+            updata(nd[i], 1, n, dl[nx], val[nc], i);
+            if(rx!=-1 &amp;&amp; lx!=-1)
+                updata(nd[i], 1, n, dl[lca(lx, rx)], val[nc], i);
+            if(lx!=-1)
+                updata(nd[i], 1, n, dl[lca(lx, nx)], inv[val[nc]], i);
+            if(rx!=-1)
+                updata(nd[i], 1, n, dl[lca(nx, rx)], inv[val[nc]], i);
+            s[nc].insert(dl[nx]);
+            j++;
+        }
+    }
     
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-agc-015-e/">AGC015E Mr.Aoki Incubator </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月20日</time>
+    /* query */
+    int q, lstans=0;
+    gn(q);
+    while(q--) {
+        gn(u), gn(v), u=u^(k*lstans), v=v^(k*lstans);
+        printf(&quot;%d\n&quot;, lstans=query(nd[min(dep[u]+v, mdep)], 1, n, dl[u], dr[u]));
+    }
+    return 0;
+}
+</code></pre>
+                </article>
+
+              </div>
               
-              <address>
+              <div class="card-action card-action-links">
                 
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
-                
-              </address>
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/stl">STL</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E4%B8%BB%E5%B8%AD%E6%A0%91">主席树</a> 
+              </div>
               
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/convex-hull-and-qia-qiao/" rel="next">凸包与旋转卡壳</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>有点难&hellip;</p> 
-              <a href="https://i.acxblog.site/posts/sol-agc-015-e/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E5%8D%95%E8%B0%83%E6%A0%88'>单调栈</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/dp'>DP</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E4%BA%8C%E5%88%86'>二分</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -457,6 +677,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>

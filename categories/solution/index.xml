@@ -6,10 +6,19 @@
     <description>Recent content in Solution on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 28 Mar 2019 09:27:57 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2019 16:26:02 +0800</lastBuildDate>
     
 	<atom:link href="https://i.acxblog.site/categories/solution/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JZOJ6086 动态半平面交</title>
+      <link>https://i.acxblog.site/posts/sol-jzoj-6086/</link>
+      <pubDate>Thu, 28 Mar 2019 16:26:02 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/sol-jzoj-6086/</guid>
+      <description>&lt;p&gt;常数制造机&amp;hellip;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>JZOJ2090 圆</title>
