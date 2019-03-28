@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>递推 on FantasyAir</title>
+    <link>https://i.acxblog.site/tags/%E9%80%92%E6%8E%A8/</link>
+    <description>Recent content in 递推 on FantasyAir</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 28 Mar 2019 09:27:57 +0800</lastBuildDate>
+    
+	<atom:link href="https://i.acxblog.site/tags/%E9%80%92%E6%8E%A8/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sol Jzoj 2090</title>
+      <link>https://i.acxblog.site/posts/sol-jzoj-2090/</link>
+      <pubDate>Thu, 28 Mar 2019 09:27:57 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/sol-jzoj-2090/</guid>
+      <description>Problem 给定 $n$ ，求有多少个 $1\to n$ 的排列可以分割成三个上升子序列。$n \leq 500$。 Solution 假设给定一个排列，那么我们贪心的从前往后选，维护三个上升序列，每扫</description>
+    </item>
+    
+  </channel>
+</rss>

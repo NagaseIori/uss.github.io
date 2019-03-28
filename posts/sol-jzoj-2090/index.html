@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    LP4383 林克卡特树 | FantasyAir
+    Sol Jzoj 2090 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/posts/sol-luogu-4383/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-2090/" />
 
   
   
@@ -331,7 +331,7 @@
         
     
       
-    <span class="breadcrumb">LP4383 林克卡特树</span>
+    <span class="breadcrumb">Sol Jzoj 2090</span>
 
         
     
@@ -340,7 +340,7 @@
 </section>
               
               <div class="card-header postinfo">
-                <span class="card-title">LP4383 林克卡特树 </span>
+                <span class="card-title">Sol Jzoj 2090 </span>
               </div>
               <div class="card-header date">
                 
@@ -354,7 +354,7 @@
                 
                 <div class="group">
                   <i class="material-icons">flag</i>
-                  <time>创建：2019年03月15日
+                  <time>创建：2019年03月28日
                   </time>
                 </div>
                 
@@ -365,110 +365,82 @@
               <div class="card-content">
 
                 <article class="article">
-                  <p>弄了一晚上，几篇博客交换看才看懂。</p>
+                  
 
-<p>可能也是因为分心了的缘故。</p>
+<h1 id="problem">Problem</h1>
+
+<p>给定 $n$ ，求有多少个 $1\to n$ 的排列可以分割成三个上升子序列。$n \leq 500$。</p>
 
 <h1 id="solution">Solution</h1>
 
-<p>将整棵树分为 $k+1$ 个联通块，对每个联通块找直径，然后直径端点连成一条链一定是最优解。</p>
+<p>假设给定一个排列，那么我们贪心的从前往后选，维护三个上升序列，每扫到一个数字添加到能放的上升序列且保证原上升序列的最大值尽量大。这样一定能构造出一种合法方案（如果有）且分割方案唯一。</p>
 
-<p>考虑转化问题，求树上 $k+1$ 条不相交链的最大权和。</p>
+<p>考虑三个序列的最大值设计状态。由于不清楚插入的数具体是什么，我们令其为相对大小： $f_{i, j, k}$ ，且令 $i&gt;j&gt;k\geq 0$ 。同时存在 $j=k=0$ 的情况。</p>
 
-<p>设计状态。考虑一个点的度数只可能为 $0/1/2$ 。令 $f_{i, j, k}$ 为第 $i$ 个点，度数为 $j$ ，用了 $k$ 条链的子树最优解。</p>
+<p>那么我们插入一个新的相对大小为 $l \in [1, i+1]$ 的值。那么原相对大小处于 $[l, i]$ 区间的值都会被往后顶成 $[l+1, i+1]$ 。则我们分情况讨论 $l$ 的转移：</p>
 
-<p>再具体阐述状态。$f_{i, 0}$ 代表这个点度数为 $0$ ，即在最终的方案中它并不属于直径，因此不占用任何链的个数也不提供任何贡献。 $f_{i, 1}$ 的状态正常。 $f_{i, 2}$ 代表这个点的度数为 $2$ 。那么如果我们想要一个单点成为直径中的一条链，我们就假设是 $i$ 向自己连了自环，度数为 $2$ 且占用了一条链的数目。</p>
+<p><code>$$
+f_{i, j, k} \rightarrow \begin{cases} 
+f_{i+1, j+1, l} &amp; \text{for } k&lt;l\leq j\\
+f_{i+1, l, k} &amp; \text{for }j&lt;l \leq i\\
+f_{i+1, j, k} &amp; \text{for }l=i+1
+\end{cases}
+$$</code></p>
 
-<p>那么初始化也就呼之欲出了：$f_{i, 0, 0}=f_{i, 2, 1}=0$ ，其余置为 $-\infty$ 。</p>
-
-<p>转移不难。</p>
-
-<hr />
-
-<p>通过观察（打表）发现对于使用链数为 $k$ 的最优解呈凸函数，使用 <a href="https://www.luogu.org/blog/EternalAlexander/solution-p4383">凸优化dp</a> 来去除 $k$ 的限制。</p>
-
-<p>注意我们是对<strong>每条链</strong>产生的贡献减去斜率而不是对<strong>每条边</strong>。</p>
-
-<p>那么初始的dp去除第三维来做就行了。</p>
-
-<p>但是凸函数可能会出现你要找的点和前后两点处于同一直线。那么此时应当二分到该直线的斜率，并使用斜率和 $k$ 来直接求出 $k$ 的最优值。</p>
+<p>差分即可优化到 $O(n^3)$ 。</p>
 
 <h2 id="code">Code</h2>
 
-<pre><code class="language-cpp">// Code by ajcxsu
-// Problem: linke kate shu
-
-#include&lt;bits/stdc++.h&gt;
-#define INF (0x7fffffff)
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 
-template&lt;typename T&gt; inline void gn (T &amp;x) {
-    char ch=getchar(), pl=0; x=0;
-    while(!isdigit(ch)) pl=ch=='-', ch=getchar();
-    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
-}
-template&lt;typename T, typename ...Args&gt; inline void gn (T &amp;x, Args &amp;...args) {
-    gn(x), gn(args...);
-}
+const int N=501;
+int f[2][N][N], g[2][N][N];
+int u, v=1;
 
-const int N=3e5+10, M=N&lt;&lt;1;
-typedef long long ll;
-struct Data {
-    ll x; int k;
-    friend bool operator &lt; (const Data &amp;a, const Data &amp;b) { return a.x==b.x?(a.k&lt;b.k):a.x&lt;b.x; }
-    Data operator + (const Data &amp;b) { return {x+b.x, k+b.k}; }
-} f[3][N], tmp[3];
-int h[N], to[M], nexp[M], p=1;
-ll W[M], rw[M];
-inline void ins(int a, int b, int w) { nexp[p]=h[a], h[a]=p, to[p]=b, W[p]=w, p++; }
-ll delta;
-void dfs(int x, int fr) {
-    for(int u=h[x];u;u=nexp[u])
-        if(to[u]!=fr) {
-            dfs(to[u], x);
-            for(int i=0; i&lt;3; i++) tmp[i]={-(1ll&lt;&lt;60), 0x3f3f3f3f};
-            for(int i=0; i&lt;3; i++) tmp[0]=max(tmp[0], f[0][x]+f[i][to[u]]);
-            tmp[1]=max(f[0][x]+f[0][to[u]]+(Data){W[u]-delta, 1}, f[0][x]+f[1][to[u]]+(Data){W[u], 0});
-            for(int i=0; i&lt;3; i++) tmp[1]=max(tmp[1], f[1][x]+f[i][to[u]]);
-            tmp[2]=max(f[1][x]+f[0][to[u]]+(Data){W[u], 0}, f[1][x]+f[1][to[u]]+(Data){W[u]+delta, -1});
-            for(int i=0; i&lt;3; i++) tmp[2]=max(tmp[2], f[2][x]+f[i][to[u]]);
-            for(int i=0; i&lt;3; i++) f[i][x]=tmp[i];
-        }
-}
-
-int n;
-int check(ll v) {
-    delta=v;
-    for(int i=1; i&lt;=n; i++) f[0][i]={0, 0}, f[1][i]={-(1ll&lt;&lt;60), 0x3f3f3f3f}, f[2][i]={-v, 1};
-    dfs(1, 0);
-    return max({f[0][1], f[1][1], f[2][1]}).k;
-}
+int n, P;
+int add(int &amp;x, int y) { x+=y; if(x&gt;=P) x-=P; return x; }
 
 int main() {
-    int k;
-    gn(n), gn(k); k++;
-    int u, v, w;
-    ll l=0, r=0, mid, ans=-INF;
-    for(int i=0; i&lt;n-1; i++) gn(u, v, w), ins(u, v, w), ins(v, u, w), r+=abs(w);
-    l=-r;
-    memcpy(rw, W, sizeof(W));
-    while(l&lt;=r) {
-        mid=(l+r)&gt;&gt;1;
-        if(check(mid)&gt;=k) l=mid+1, ans=mid;
-        else r=mid-1;
+    freopen(&quot;yuan.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;yuan.out&quot;,&quot;w&quot;,stdout);
+    ios::sync_with_stdio(false), cin.tie(0);
+    cin&gt;&gt;n&gt;&gt;P;
+    f[v][0][0]=1;
+    int ans=0;
+    for(int i=1; i&lt;=n; i++) {
+        u^=1, v^=1;
+        for(int j=0; j&lt;i-1;j++)
+        for(int k=0; k&lt;=j; k++)
+            f[v][j][k]=g[v][j][k]=0;
+        for(int j=0; j&lt;i-1; j++)
+        for(int k=0; (!k &amp;&amp; !j) || k&lt;j; k++)
+            add(f[v][j+1][k+1],f[u][j][k]),
+            add(f[v][j+1][j+1],-f[u][j][k]),
+            add(g[v][j+1][k],f[u][j][k]),
+            add(g[v][i][k],-f[u][j][k]);
+        for(int j=0; j&lt;i; j++) 
+            for(int k=0; (!k &amp;&amp; !j) || k&lt;j; k++)
+                add(f[v][j][k],f[v][j][k-1]),
+                add(g[v][j][k],g[v][j-1][k]);
+        for(int j=0; j&lt;i; j++)
+            for(int k=0; (!k &amp;&amp; !j) || k&lt;j; k++) {
+                add(f[v][j][k],add(g[v][j][k],f[u][j][k]));
+                if(i==n) add(ans, f[v][j][k]);
+            }
     }
-    check(ans);
-    printf(&quot;%lld\n&quot;, max({f[0][1], f[1][1], f[2][1]}).x+ans*k);
+    printf(&quot;%d\n&quot;, ans);
     return 0;
 }
 </code></pre>
+
                 </article>
 
               </div>
               
               <div class="card-action card-action-links">
                 
-                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%87%B8%E4%BC%98%E5%8C%96dp">凸优化DP</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E9%80%92%E6%8E%A8">递推</a> 
               </div>
               
               <div class="card-action">
@@ -496,14 +468,10 @@ int main() {
               
               <div class="pagination-single">
                  
-                <span class="pagination-item previous">
-                  <i class="material-icons">navigate_before</i>
-                  <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/" rel="prev">Favorite Pixiv Artists</a>
-                </span>  
                 
                 
                 <span class="pagination-item next">
-                  <a href="https://i.acxblog.site/posts/sol-uoj-462/" rel="next">UOJ462 新年的小黄鸭</a>
+                  <a href="https://i.acxblog.site/posts/sakura/" rel="next">Sakura</a>
                   <i class="material-icons">navigate_next</i>
                 </span> 
               </div>
