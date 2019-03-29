@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    Sam | FantasyAir
+    JZOJ6096 森林 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/sam/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6096/" />
 
   
   
@@ -352,11 +352,31 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -367,100 +387,174 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">Sam</span>
+    <span class="breadcrumb">JZOJ6096 森林</span>
 
         
     
       
   </div>
 </section>
-    
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-your-name/">NOI2018 你的名字 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月28日</time>
               
-              <address>
+              <div class="card-header postinfo">
+                <span class="card-title">JZOJ6096 森林 </span>
+              </div>
+              <div class="card-header date">
                 
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
+                  </address>
+                </div>
                 
-              </address>
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2019年03月29日
+                  </time>
+                </div>
+                
+                
+
+              </div>
               
+              <div class="card-content">
+
+                <article class="article">
+                  <p>转化比较巧妙，考场上想傻逼了的题目。很好打。</p>
+
+<h1 id="problem">Problem</h1>
+
+<p>给定一棵只有一个点的树，1e5次操作，每次加一个点后问至多交换一次两棵子树后的最大直径长度。强制在线。</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>考虑事实上就是把直径上的链剖出然后询问最长支链的长度 $lp$ ，答案就是 $d+max(lp-1, 0)$ 。</p>
+
+<p>那么考虑每次加入一个点之后直径和最长支链的变化。如果直径变化，考虑另一条被换下来的支链一定是这条原支链的现长度-1。那么如果原支链的原长度就是最长支链，就直接考虑另一条被换下来的支链更新最长支链即可。如果不是最长支链，那么理论上最长支链是不会变化的，但是为了避免奇怪的错误我们还是要更新一下最长支链的点。</p>
+
+<p>如果直径不变化，那么直接用新加的点更新最长支链即可。</p>
+
+<p>倍增维护。</p>
+
+<h2 id="code">Code</h2>
+
+<pre><code class="language-cpp">// Code by ajcxsu
+// Problem: forest
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+template&lt;typename T&gt; inline void gn(T &amp;x) {
+    char ch=getchar(), pl=0; x=0;
+    while(!isdigit(ch)) pl=(ch=='-'), ch=getchar();
+    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
+}
+
+const int N=2e5+10, OP=19;
+int gup[OP][N], dep[N];
+void add(int x, int fa) {
+    gup[0][x]=fa, dep[x]=dep[fa]+1;
+    for(int j=1; j&lt;OP; j++)
+        gup[j][x]=gup[j-1][gup[j-1][x]];
+}
+int lca(int s, int t) {
+    if(dep[s]&lt;dep[t]) swap(s, t);
+    for(int j=OP-1; j&gt;=0; j--) if(dep[gup[j][s]]&gt;=dep[t]) s=gup[j][s];
+    if(s==t) return s;
+    for(int j=OP-1; j&gt;=0; j--)
+        if(gup[j][s]!=gup[j][t]) s=gup[j][s], t=gup[j][t];
+    return gup[0][s];
+}
+int dis(int s, int t) {
+    return dep[s]+dep[t]-2*dep[lca(s, t)];
+}
+int u=1, v=1, p=1, fa, len, lp, lst;
+int cac(int x) { return dis(x, u)+dis(x, v)-len&gt;&gt;1; }
+
+int main() {
+    #ifndef LOCAL
+    freopen(&quot;forest.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;forest.out&quot;,&quot;w&quot;,stdout);
+    #endif
+    dep[1]=1;
+    int n, tod;
+    gn(n), gn(n);
+    int tmp;
+    for(int i=2; i&lt;=n; i++) {
+        gn(fa), fa^=lst;
+        add(i, fa);
+        int la=dis(u, i), lb=dis(v, i);
+        if(la&gt;len || lb&gt;len) {
+            if(la&gt;lb)
+                tod=v, v=i, len=la;
+            else
+                tod=u, u=i, len=lb;
+            if((tmp=cac(tod))&gt;lp) 
+                lp=tmp, p=tod;
+        }
+        else if(((la+lb-len)&gt;&gt;1)&gt;lp)
+            lp=(la+lb-len)&gt;&gt;1, p=i;
+        printf(&quot;%d\n&quot;, lst=len+max(lp-1, 0));
+    }
+    return 0;
+}
+</code></pre>
+                </article>
+
+              </div>
+              
+              <div class="card-action card-action-links">
+                
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%80%8D%E5%A2%9E">倍增</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84">树的直径</a> 
+              </div>
+              
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/sol-your-name/" rel="next">NOI2018 你的名字</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>调调改改了一晚上才过掉。总而言之还是自己对题目理解太不深刻了。基本上是对着抄但是又抄得很无奈。</p> 
-              <a href="https://i.acxblog.site/posts/sol-your-name/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/sam'>SAM</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%90%88%E5%B9%B6'>线段树合并</a>
-          </div>
-          
-        </div>
-      </div>
-      
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-spoj-1812/">SPOJ1812 LCS2 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月21日</time>
-              
-              <address>
-                
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
-                
-              </address>
-              
-            </div>
-          </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>浪费了我一晚上的生命&hellip;</p> 
-              <a href="https://i.acxblog.site/posts/sol-spoj-1812/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/sam'>SAM</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -509,6 +603,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
