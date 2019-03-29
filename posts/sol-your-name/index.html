@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    Sam | FantasyAir
+    NOI2018 你的名字 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/sam/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-your-name/" />
 
   
   
@@ -340,11 +340,30 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -355,100 +374,242 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">Sam</span>
+    <span class="breadcrumb">NOI2018 你的名字</span>
 
         
     
       
   </div>
 </section>
-    
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-your-name/">NOI2018 你的名字 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月28日</time>
               
-              <address>
+              <div class="card-header postinfo">
+                <span class="card-title">NOI2018 你的名字 </span>
+              </div>
+              <div class="card-header date">
                 
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
+                  </address>
+                </div>
                 
-              </address>
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2019年03月28日
+                  </time>
+                </div>
+                
+                
+
+              </div>
               
+              <div class="card-content">
+
+                <article class="article">
+                  <p>调调改改了一晚上才过掉。总而言之还是自己对题目理解太不深刻了。基本上是对着抄但是又抄得很无奈。</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>不考虑区间限制的话，则 $S, T$ 同时匹配。如果 $S$ 向 $c$ 边转移出现了不匹配，那么将 $S$ 向上跳到匹配为止，同时 $T$ 也应该向上跳使得 $len$ 与现处的状态相符。</p>
+
+<p>考虑区间限制的话，我们使用线段树合并维护树的 $endpos$ 集合。那么对于已经固定了的字符串长度 $l&rsquo;$ ，需要加上字符 $c$ ，要求 $S$ 转移后所处状态的 $endpos$ 存在于 $[l+l&rsquo;, r]$ 。否则我们需要将 $l&rsquo;$ <strong>一步步减小</strong> 来查看是否匹配。当 $l&rsquo;=len[fa[p]]$ 时需要将 $p$ 向上转移。</p>
+
+<p>我们同时需要意识到我们可以在 $S$ 的 parent 树上直接转移，且转移到的节点的 $len$ 是符合假想区间 parent 树构造的（或者略大，但如果向上跳一定符合），因为我们转移到的状态一定在区间 parent 树上存在。这部分我觉得我可能还需要再加深理解。</p>
+
+<p>口胡一下：对于SAM，如果从状态 $A$ 转移到状态 $B$ ，你需要保证如下条件：$endpos$ 集合存在，且 $len&rsquo;$ 属于结点所属 $len$ 区间。由于 $len&rsquo;=len+1$ ，所以只需要保证 $endpos$ 合法即可。</p>
+
+<h2 id="code">Code</h2>
+
+<pre><code class="language-cpp">// Code by ajcxsu
+// Problem: yourname.
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N=3e6+10, M=5e7+10;
+struct Node {
+    int ch[26];
+    int len, fa;
+    void clr() { len=fa=0; memset(ch, 0, sizeof(ch)); }
+} ;
+
+struct Tree *nil;
+struct Tree {
+    int v, t;
+    Tree *ls, *rs;
+} po[M], *pp=po;
+void ini() { nil=pp++; nil-&gt;ls=nil-&gt;rs=nil; }
+Tree* newn() { assert(pp!=po+M), *pp=*nil; return pp++; }
+void updata(Tree *&amp;x, int l, int r, int d) {
+    if(x==nil) x=newn();
+    x-&gt;v=max(x-&gt;v, d); if(l==r) return;
+    int mid=(l+r)&gt;&gt;1;
+    if(d&lt;=mid) updata(x-&gt;ls, l, mid, d);
+    else updata(x-&gt;rs, mid+1, r, d);
+}
+Tree* Merge(Tree *x, Tree *y) {
+    Tree *o=newn(); if(x==nil || y==nil) return x==nil?y:x;
+    o-&gt;v=max(x-&gt;v, y-&gt;v);
+    o-&gt;ls=Merge(x-&gt;ls, y-&gt;ls), o-&gt;rs=Merge(x-&gt;rs, y-&gt;rs);
+    return o;
+}
+int query(Tree *x, int l, int r, int xr) {
+    if(r&lt;=xr) return x-&gt;v;
+    int mid=(l+r)&gt;&gt;1, ret=query(x-&gt;ls, l, mid, xr);
+    if(xr&gt;mid) ret=max(ret, query(x-&gt;rs, mid+1, r, xr));
+    return ret;
+}
+typedef long long ll;
+struct SAM {
+    Node nd[N];
+    int idx=1, lst=1;
+    int g[N]; Tree *tr[N];
+    void add(int c, int mode) {
+        int p=lst, np=lst=++idx; nd[np].clr(), nd[np].len=nd[p].len+1;
+        if(mode) updata(tr[idx], 0, N, nd[np].len);
+        for(; p &amp;&amp; !nd[p].ch[c]; p=nd[p].fa) nd[p].ch[c]=np;
+        if(!p) nd[np].fa=1;
+        else {
+            int q=nd[p].ch[c];
+            if(nd[q].len==nd[p].len+1) nd[np].fa=q;
+            else {
+                int nq=++idx; nd[nq]=nd[q];
+                nd[nq].len=nd[p].len+1, nd[q].fa=nd[np].fa=nq;
+                for(; p &amp;&amp; nd[p].ch[c]==q; p=nd[p].fa) nd[p].ch[c]=nq;
+            }
+        }
+    }
+    int id[N], bu[N];
+    void sort() {
+        fill(bu, bu+idx+1, 0); // !!
+        for(int i=1; i&lt;=idx; i++) bu[nd[i].len]++;
+        for(int i=1; i&lt;=idx; i++) bu[i]+=bu[i-1];
+        for(int i=idx; i&gt;=1; i--) id[bu[nd[i].len]--]=i;
+    }
+    ll ftot;
+    void ini1() {
+        for(int i=idx; i&gt;=2; i--) ftot+=nd[i].len-nd[nd[i].fa].len;
+    }
+    void ini2() {
+        for(int i=idx; i&gt;=2; i--) {
+            int tmp=id[i];
+            tr[nd[tmp].fa]=Merge(tr[nd[tmp].fa], tr[tmp]);
+        }
+    }
+    char str[N];
+    int n;
+    void ini(int mode=0) {
+        idx=lst=1; ftot=0;
+        n=strlen(str);
+        if(mode) fill(tr, tr+N, nil);
+        nd[1].clr();
+        for(int i=0; i&lt;n; i++) add(str[i]-'a', mode);
+        sort();
+        fill(g, g+idx+1, 0);
+        if(!mode) ini1();
+        else ini2();
+    }
+    ll deal() {
+        ll cnt=0;
+        for(int i=idx; i&gt;=2; i--) {
+            int tmp=id[i];
+            g[tmp]=min(g[tmp], nd[tmp].len);
+            g[nd[tmp].fa]=max(g[nd[tmp].fa], g[tmp]);
+            cnt+=max(g[tmp]-nd[nd[tmp].fa].len, 0); // 忘取max了...
+        }
+        return ftot-cnt;
+    }
+    inline int mov(int x, char ch) { return nd[x].ch[ch-'a']; }
+} s, t;
+
+int main() {
+    ini();
+    scanf(&quot;%s&quot;, s.str);
+    s.ini(1);
+    int T; scanf(&quot;%d&quot;, &amp;T);
+    int l, r;
+    while(T--) {
+        scanf(&quot;%s%d%d&quot;, t.str, &amp;l, &amp;r);
+        t.ini();
+        int na=1, nb=1, len=0, to;
+        bool chg;
+        for(int i=0; i&lt;t.n; i++) {
+            to=s.mov(na, t.str[i]);
+            nb=t.mov(nb, t.str[i]);
+            chg=0;
+            while(na &amp;&amp; (!to || query(s.tr[to], 0, N, r)&lt;l+len)) {
+                if(!len) { na=0; break; }
+                len--;
+                if(len==s.nd[s.nd[na].fa].len) na=s.nd[na].fa, to=s.mov(na, t.str[i]);
+            }
+            if(!na) na=1, len=0;
+            else na=to, len++;
+            while(nb &amp;&amp; t.nd[t.nd[nb].fa].len&gt;=len) nb=t.nd[nb].fa;
+            nb+=!nb;
+            t.g[nb]=max(t.g[nb], len);
+        }
+        printf(&quot;%lld\n&quot;, t.deal());
+    }
+    return 0;
+}
+</code></pre>
+                </article>
+
+              </div>
+              
+              <div class="card-action card-action-links">
+                
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/sam">SAM</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%90%88%E5%B9%B6">线段树合并</a> 
+              </div>
+              
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/sol-jzoj-6086/" rel="next">JZOJ6086 动态半平面交</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>调调改改了一晚上才过掉。总而言之还是自己对题目理解太不深刻了。基本上是对着抄但是又抄得很无奈。</p> 
-              <a href="https://i.acxblog.site/posts/sol-your-name/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/sam'>SAM</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%90%88%E5%B9%B6'>线段树合并</a>
-          </div>
-          
-        </div>
-      </div>
-      
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/sol-spoj-1812/">SPOJ1812 LCS2 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月21日</time>
-              
-              <address>
-                
-                <a href='https://i.acxblog.site/categories/solution'>solution</a>
-                
-              </address>
-              
-            </div>
-          </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>浪费了我一晚上的生命&hellip;</p> 
-              <a href="https://i.acxblog.site/posts/sol-spoj-1812/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/sam'>SAM</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -497,6 +658,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
