@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    Pixiv | FantasyAir
+    JZOJ6092 附耳而至 | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/pixiv/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/sol-jzoj-6092/" />
 
   
   
@@ -358,11 +358,31 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#solution">Solution</a>
+<ul>
+<li><a href="#code">Code</a></li>
+</ul></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -373,79 +393,235 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">Pixiv</span>
+    <span class="breadcrumb">JZOJ6092 附耳而至</span>
 
         
     
       
   </div>
 </section>
+              
+              <div class="card-header postinfo">
+                <span class="card-title">JZOJ6092 附耳而至 </span>
+              </div>
+              <div class="card-header date">
+                
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/solution">solution</a>&nbsp; 
+                  </address>
+                </div>
+                
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2019年03月30日
+                  </time>
+                </div>
+                
+                
+
+              </div>
+              
+              <div class="card-content">
+
+                <article class="article">
+                  <p>喵。</p>
+
+<h1 id="problem">Problem</h1>
+
+<p>给出一张被划分出多个区域的平面图。区域染不同颜色会有不同的权值，如果相邻两区域颜色不同会产生额外费用。求最大贡献。</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>前置知识比较多？</p>
+
+<p>极角排序和最左转线。极角排序可以用函数 <code>atan2(y, x)</code> 求出 $\arctan \frac{y}{x}$ ，返回 $[-\pi, \pi]$ 的结果。如果小于零就加上个 $2\pi$ 吧，然后排序就行了。</p>
+
+<p>因为有可能被卡精度，你也可以用象限排序。如果同一象限就叉积，否则比象限。太难打就没打了。</p>
+
+<p>然后最左转线用于求这种带坐标的平面图和对偶图转化。具体请参见 <a href="http://blog.miskcoo.com/2015/05/planar-graph-dual-and-point-locate">miskcoo&rsquo;s Blog</a> ，这里讲得比较好，代码也写得很好。</p>
+
+<p>就是细节不少。</p>
+
+<p>然后我们发现题面的意思其实只需要我们求一种匹配方案使得 W 和 B 还有相邻产生的总贡献量最小，然后用 W 和 B 的总值减去这个值即可。</p>
+
+<p>网络流嘛。随便跑跑。</p>
+
+<h2 id="code">Code</h2>
+
+<pre><code class="language-cpp">// Code by ajcxsu
+// Problem: everfeel
+
+#define _USE_MATH_DEFINES
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+template&lt;typename T&gt; inline void gn(T &amp;x) {
+    char ch=getchar(), pl=0; x=0;
+    while(!isdigit(ch)) pl=(ch=='-'), ch=getchar();
+    while(isdigit(ch)) x=x*10+ch-'0', ch=getchar(); x*=pl?-1:1;
+}
+
+const int N=4e4+10, M=4e5+10;
+struct P {
+    int x, y;
+    P operator + (P b) { return {x+b.x, y+b.y}; }
+    P operator - (P b) { return {x-b.x, y-b.y}; }
+    double ang() { double ang=atan2(y, x); if(ang&lt;0) ang+=2.0*M_PI; return ang;}
+} p[N];
+struct Edge {
+    int w, u, v; 
+    double ang;
+} e[M];
+vector&lt;int&gt; to[N];
+int tp[N];
+int ridx, mp;
+int a[N], b[N], rk[M], bel[M];
+int A[M], B[M], tot;
+void ins(int a, int b, int w) {
+    e[mp++]={w, a, b, (p[b]-p[a]).ang()};
+}
+
+namespace NS {
+    const int s=N-1, t=N-2;
+    int h[N], to[M], nexp[M], W[M], p=2;
+    inline void ins(int a, int b, int w) { nexp[p]=h[a], h[a]=p, to[p]=b, W[p]=w, p++; }
+    #define sins(x, y, z) ins(x, y, z), ins(y, x, 0)
+    int fl[N];
+    bool bfs() {
+        queue&lt;int&gt; qu; qu.push(s); memset(fl, 0, sizeof(fl)); fl[s]=1;
+        while(!qu.empty()) {
+            int na=qu.front(); qu.pop();
+            for(int u=h[na];u;u=nexp[u])
+                if(W[u] &amp;&amp; !fl[to[u]]) fl[to[u]]=fl[na]+1, qu.push(to[u]);
+        }
+        return fl[t];
+    }
+    #define INF (0x3f3f3f3f)
+    int dfs(int x, int op) {
+        if(x==t) return op;
+        int flow=0;
+        for(int u=h[x];u;u=nexp[u])
+            if(W[u] &amp;&amp; fl[to[u]]==fl[x]+1) {
+                int d=dfs(to[u], min(op-flow, W[u]));
+                W[u]-=d, W[u^1]+=d, flow+=d;
+                if(flow==op) break;
+            }
+        if(!flow) fl[x]=0;
+        return flow;
+    }
+    void work() {
+        for(int i=0; i&lt;mp; i+=2)
+            ins(bel[i], bel[i+1], e[i].w), ins(bel[i+1], bel[i], e[i].w);
+        for(int i=1; i&lt;=ridx; i++)
+            sins(s, i, A[i]), sins(i, t, B[i]), tot+=A[i]+B[i];
+        int flow=0;
+        while(bfs()) flow+=dfs(s, INF);
+        printf(&quot;%d\n&quot;, tot-flow);
+    }
+}
+
+bool vis[N];
+void findreg(int x, int eid) {
+    if(vis[eid]) return;
+    ++ridx;
+    while(!vis[eid]) {
+        vis[eid]=1;
+        bel[eid]=ridx, x=e[eid].v;
+        A[ridx]+=a[x], B[ridx]+=b[x];
+        if(!rk[eid^1]) eid=to[x].back();
+        else eid=to[x][rk[eid^1]-1];
+    }
+}
+
+
+int main() {
+    #ifndef LOCAL
+    freopen(&quot;everfeel.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;everfeel.out&quot;,&quot;w&quot;,stdout);
+    #endif
+    int num; gn(num);
+    int n, m; gn(n), gn(m);
+    int u, v, w;
+    for(int i=1; i&lt;=n; i++) gn(u), gn(v), p[i]={u, v}, gn(a[i]), gn(b[i]);
+    vector&lt;pair&lt;double, int&gt; &gt; tmp;
+    for(int i=1; i&lt;=m; i++) {
+        gn(u), gn(v), gn(w);
+        ins(u, v, w);
+        ins(v, u, w);
+    }
     
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/">Favorite Pixiv Artists </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月17日</time>
+    for(int i=0; i&lt;mp; i++) tmp.push_back(make_pair(e[i].ang, i));
+    sort(tmp.begin(), tmp.end());
+    for(int i=0; i&lt;mp; i++) {
+        int eid=tmp[i].second;
+        rk[eid]=to[e[eid].u].size();
+        to[e[eid].u].push_back(eid);
+    }
+    for(int i=1; i&lt;=n; i++)
+        for(int j=0; j&lt;to[i].size(); j++)
+            findreg(i, to[i][j]);
+    NS::work();
+    return 0;
+}
+</code></pre>
+                </article>
+
+              </div>
               
-              <address>
+              <div class="card-action card-action-links">
                 
-                <a href='https://i.acxblog.site/categories/others'>others</a>
-                
-              </address>
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95">计算几何</a> 
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E7%BD%91%E7%BB%9C%E6%B5%81">网络流</a> 
+              </div>
               
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/sol-jzoj-6096/" rel="next">JZOJ6096 森林</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>自用。</p>
-
-<p>不提供推荐。</p>
-
-<p>不提供P站ID。</p>
-
-<p>意见主观。</p>
-
-<p>不专业。</p>
-
-<p>不可爱的画师不会记载。</p>
-
-<p>画很多男孩子的画师也不会记载。</p>
-
-<p>也许会长期更新。</p> 
-              <a href="https://i.acxblog.site/posts/favorite-pixiv-artists/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/pixiv'>Pixiv</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/vocaloid'>VOCALOID</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -494,6 +670,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
