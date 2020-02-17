@@ -377,6 +377,7 @@
 <li><a href="#配置">配置</a></li>
 <li><a href="#防火墙">防火墙</a></li>
 <li><a href="#自动重启">自动重启</a></li>
+<li><a href="#引用">引用</a></li>
 </ul>
 </nav>
           </div>
@@ -457,8 +458,8 @@ chmod +x build_deb.sh
 	&quot;password&quot;:&quot;password&quot;,
 	&quot;method&quot;:&quot;aes-128-gcm&quot;, // 或 aes-256-gcm, chacha20-ietf-poly1305, xchacha20-ietf-poly1305
 	&quot;timeout&quot;:60, // 适当更改
-    &quot;plugin&quot;:&quot;/usr/bin/obfs-server&quot;,
-    &quot;plugin_opts&quot;:&quot;obfs=tls;failover=&lt;域名或 IP&gt;&quot; // failover 在非正常请求下会跳转到你设置的域名/IP
+	&quot;plugin&quot;:&quot;/usr/bin/obfs-server&quot;,
+	&quot;plugin_opts&quot;:&quot;obfs=tls;failover=&lt;域名或 IP&gt;&quot; // failover 在非正常请求下会跳转到你设置的域名/IP
 }
 </code></pre>
 
@@ -511,6 +512,16 @@ ufw enable
 <p>在每天凌晨四点主机便会重启。</p>
 
 <p>nano 的保存方式是 <code>Ctrl+O</code> + <code>Enter</code> 后 <code>Ctrl+X</code> 即可。</p>
+
+<h1 id="引用">引用</h1>
+
+<p><a href="https://cokebar.info/archives/767">https://cokebar.info/archives/767</a></p>
+
+<p><a href="https://linux.cn/article-8087-1.html">https://linux.cn/article-8087-1.html</a></p>
+
+<p><a href="https://stackoverflow.com/questions/41319291/ufw-blocks-most-ports-until-disabled-and-re-enabled-after-reboot">https://stackoverflow.com/questions/41319291/ufw-blocks-most-ports-until-disabled-and-re-enabled-after-reboot</a></p>
+
+<p><a href="https://www.linuxquestions.org/questions/linux-networking-3/need-to-reload-ufw-after-each-restart-to-apply-rules-4175629240/">https://www.linuxquestions.org/questions/linux-networking-3/need-to-reload-ufw-after-each-restart-to-apply-rules-4175629240/</a></p>
                 </article>
 
               </div>
