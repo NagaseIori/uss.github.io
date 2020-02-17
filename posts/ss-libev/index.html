@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    科学上网 | FantasyAir
+    ss-libev 部署踩坑 | FantasyAir
   </title>
 
   
@@ -14,13 +14,15 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/ss-libev/" />
 
   
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/ocean.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://i.acxblog.site/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/fira_code.css">
+  <link href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.15.9/styles/atom-one-dark.min.css" rel="stylesheet">
   
   <link href="https://i.acxblog.site/index.xml" rel="alternate" type="application/rss+xml" title="FantasyAir" />
   <link href="https://i.acxblog.site/index.xml" rel="feed" type="application/rss+xml" title="FantasyAir" />
@@ -145,7 +147,7 @@
               
               <li>
                 <a class="btn btn-secondary" href='https://i.acxblog.site/categories/others'> others
-                  <span class="badge">6</span>
+                  <span class="badge">2</span>
                 </a>
               </li>
               
@@ -169,13 +171,13 @@
             <ul>
                 
               <li>
-                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/none'> none
-                  <span class="badge">5</span>
+                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/dp'> dp
+                  <span class="badge">2</span>
                 </a>
               </li>
               
               <li>
-                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/dp'> dp
+                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/none'> none
                   <span class="badge">2</span>
                 </a>
               </li>
@@ -206,18 +208,6 @@
               
               <li>
                 <a class="btn btn-secondary" href='https://i.acxblog.site/tags/anime'> anime
-                  <span class="badge">1</span>
-                </a>
-              </li>
-              
-              <li>
-                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/blog'> blog
-                  <span class="badge">1</span>
-                </a>
-              </li>
-              
-              <li>
-                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/oi'> oi
                   <span class="badge">1</span>
                 </a>
               </li>
@@ -307,12 +297,6 @@
               </li>
               
               <li>
-                <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91'> 科学上网
-                  <span class="badge">1</span>
-                </a>
-              </li>
-              
-              <li>
                 <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91'> 线段树
                   <span class="badge">1</span>
                 </a>
@@ -376,11 +360,30 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#安装">安装</a></li>
+<li><a href="#配置">配置</a></li>
+<li><a href="#防火墙">防火墙</a></li>
+<li><a href="#自动重启">自动重启</a></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -391,69 +394,173 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">科学上网</span>
+    <span class="breadcrumb">ss-libev 部署踩坑</span>
 
         
     
       
   </div>
 </section>
-    
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/what_stuff_did_i_do_when_i_was_an_oier/">我作为 OIER 时折腾了些啥？ :: DRAFT</a>
-            </span>
-            <div class="card-meta">
-              <time>2020年02月 8日</time>
               
-              <address>
+              <div class="card-header postinfo">
+                <span class="card-title">ss-libev 部署踩坑 </span>
+              </div>
+              <div class="card-header date">
                 
-                <a href='https://i.acxblog.site/categories/others'>others</a>
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/guide">GUIDE</a>&nbsp; 
+                  </address>
+                </div>
                 
-              </address>
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2020年02月17日
+                  </time>
+                </div>
+                
+                
+
+              </div>
               
+              <div class="card-content">
+
+                <article class="article">
+                  <p>技术性探讨。</p>
+
+<p>系统版本为 ubuntu 18.04 。</p>
+
+<h1 id="安装">安装</h1>
+
+<p>能找到的最方便的方法是使用以下指令从官方安装（会自动编译安装所有依赖包，并同时安装 <code>simple-obfs plugin</code>）：</p>
+
+<pre><code>mkdir ./build-area
+cd build-area
+wget https://github.com/shadowsocks/shadowsocks-libev/raw/master/scripts/build_deb.sh
+chmod +x build_deb.sh
+./build_deb.sh all
+</code></pre>
+
+<h1 id="配置">配置</h1>
+
+<p>文件位于 <code>/etc/shadowsocks-libev/config.json</code> 。</p>
+
+<pre><code class="language-json">{
+	&quot;server&quot;:&quot;example.com or X.X.X.X&quot;, // 这一行可以不填
+	&quot;server_port&quot;:443, // 或 8443
+	&quot;password&quot;:&quot;password&quot;,
+	&quot;method&quot;:&quot;aes-128-gcm&quot;, // 或 aes-256-gcm, chacha20-ietf-poly1305, xchacha20-ietf-poly1305
+	&quot;timeout&quot;:60, // 适当更改
+    &quot;plugin&quot;:&quot;/usr/bin/obfs-server&quot;,
+    &quot;plugin_opts&quot;:&quot;obfs=tls;failover=&lt;域名或 IP&gt;&quot; // failover 在非正常请求下会跳转到你设置的域名/IP
+}
+</code></pre>
+
+<p>客户端请下载 <code>obfs-local</code> 并将文件置于客户端根目录下，填写参数如下：</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">选项</th>
+<th align="center">参数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">插件程序</td>
+<td align="center">obfs-local.exe</td>
+</tr>
+
+<tr>
+<td align="center">插件选项</td>
+<td align="center">obfs=tls;obfs-host=&lt;域名或 IP&gt;</td>
+</tr>
+</tbody>
+</table>
+
+<p>你请求的网址会被伪装成所设置的域名。</p>
+
+<h1 id="防火墙">防火墙</h1>
+
+<p>执行如下指令：</p>
+
+<pre><code>sudo ufw default allow outgoing
+sudo ufw default deny incoming
+ufw allow 22 # 如果你更改了 SSH 端口，这里就填对应的 SSH 端口
+ufw allow 443
+ufw enable
+</code></pre>
+
+<p><strong>补充可能会出现的意外情形：</strong> 重启之后，443(8443) 端口被封闭，需要使用<code>ufw reload</code>才会打开。查看 ufw 的 log 发现 ufw 的确 BLOCK 了对应端口的连接，但是<code>ufw status</code>查看显示一切正常。我也很奇怪。同时我也发现了 <code>ufw deny 80</code> 端口这条指令并不管用，各种探测方法都显示 80 端口打开，我也很奇怪。</p>
+
+<p>查了很多教程，直接解决的方法并不管用。一种曲线救国的方式是在 <code>/etc/rc.local</code> 加入一行 <code>/etc/init.d/ufw restart</code> ，你就不用每次重启都要输入 <code>ufw reload</code> 了。</p>
+
+<h1 id="自动重启">自动重启</h1>
+
+<p>键入命令：<code>crontab -e</code>，随便选择一种编辑器（ nano 就好），然后在最下加入一行：</p>
+
+<p><code>0 4 * * * /sbin/reboot</code></p>
+
+<p>在每天凌晨四点主机便会重启。</p>
+
+<p>nano 的保存方式是 <code>Ctrl+O</code> + <code>Enter</code> 后 <code>Ctrl+X</code> 即可。</p>
+                </article>
+
+              </div>
+              
+              <div class="card-action card-action-links">
+                
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/none">NONE</a> 
+              </div>
+              
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/madoka-magica/" rel="next">魔法少女まどか☆マギカ</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>记录一下我作为 OIER 时我折腾过的事情。</p>
-
-<p>并忠告各位 OIER，因为我折腾过了这些事情（并且我最终很惨地退役了），所以我不建议所有未退役 OIER 折腾这些事情（除非你是神仙又很闲）。</p> 
-              <a href="https://i.acxblog.site/posts/what_stuff_did_i_do_when_i_was_an_oier/" class="readmore">阅读全文</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/oi'>OI</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/blog'>BLOG</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91'>科学上网</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -502,6 +609,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>
