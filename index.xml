@@ -6,10 +6,19 @@
     <description>Recent content on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 17 Feb 2020 20:21:42 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 01 Mar 2020 15:55:05 +0800</lastBuildDate>
     
 	<atom:link href="https://i.acxblog.site/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>.moe网站随机跳转探索实录</title>
+      <link>https://i.acxblog.site/posts/moe-website/</link>
+      <pubDate>Sun, 01 Mar 2020 15:55:05 +0800</pubDate>
+      
+      <guid>https://i.acxblog.site/posts/moe-website/</guid>
+      <description>&lt;p&gt;心血来潮突然想整这么一下来探索一下随机几个关键词跳转网站都会跳转到哪些地方。&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>ubuntu 18.04 ss-libev 部署踩坑</title>

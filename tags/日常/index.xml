@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>others on FantasyAir</title>
-    <link>https://i.acxblog.site/categories/others/</link>
-    <description>Recent content in others on FantasyAir</description>
+    <title>日常 on FantasyAir</title>
+    <link>https://i.acxblog.site/tags/%E6%97%A5%E5%B8%B8/</link>
+    <description>Recent content in 日常 on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 01 Mar 2020 15:55:05 +0800</lastBuildDate>
     
-	<atom:link href="https://i.acxblog.site/categories/others/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://i.acxblog.site/tags/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://i.acxblog.site/posts/moe-website/</guid>
       <description>&lt;p&gt;心血来潮突然想整这么一下来探索一下随机几个关键词跳转网站都会跳转到哪些地方。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>魔法少女まどか☆マギカ</title>
-      <link>https://i.acxblog.site/posts/madoka-magica/</link>
-      <pubDate>Sat, 31 Aug 2019 14:53:35 +0800</pubDate>
-      
-      <guid>https://i.acxblog.site/posts/madoka-magica/</guid>
-      <description>&lt;p&gt;连着把三篇剧场版看完了。粗浅地谈谈感想。&lt;/p&gt;</description>
     </item>
     
   </channel>
