@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    旋转卡壳 | FantasyAir
+    ubuntu 18.04 自建图床踩坑 (Lychee &#43; Caddy &#43; php7 &#43; MariaDB) | FantasyAir
   </title>
 
   
@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
 
   
-  <link rel="canonical" href="https://i.acxblog.site/tags/%E6%97%8B%E8%BD%AC%E5%8D%A1%E5%A3%B3/" />
+  <link rel="canonical" href="https://i.acxblog.site/posts/build-a-graph-site/" />
 
   
   
@@ -366,11 +366,38 @@
     </li>
   </ul>
   
-<main id="list" role="main" class="main-panel">
-  <div class="container container-ex">
-  <div class="inner">
-    
-    <section class="breadcrumb-root">
+
+
+
+
+<main id="single" role="main" class="main-panel">
+  <div class="page-content">
+    <div class="container container-ex">
+      <div class="inner">
+        <section class="post-wrapper">
+          
+          <div class="toc-panel">
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#配置环境">配置环境</a></li>
+<li><a href="#效果">效果</a></li>
+<li><a href="#安装">安装</a>
+<ul>
+<li><a href="#caddy">Caddy</a></li>
+<li><a href="#php7-1">PHP7.1</a></li>
+<li><a href="#mariadb10">MariaDB10</a></li>
+<li><a href="#lychee">Lychee</a></li>
+</ul></li>
+<li><a href="#mysql-崩溃">MySQL 崩溃</a></li>
+<li><a href="#后记">后记</a></li>
+<li><a href="#引用">引用</a></li>
+</ul>
+</nav>
+          </div>
+          
+          <div class="post reveal ">
+            <div class="card">
+              <section class="breadcrumb-root">
   <div class="breadcrumbs" role="navigation" aria-label="breadcrumbs navigation">
      
 
@@ -381,67 +408,199 @@
         
     
       
-    <a class="breadcrumb" href='https://i.acxblog.site/tags/'>Tags</a>
+    
         
     
       
-    <span class="breadcrumb">旋转卡壳</span>
+    <span class="breadcrumb">ubuntu 18.04 自建图床踩坑 (Lychee &#43; Caddy &#43; php7 &#43; MariaDB)</span>
 
         
     
       
   </div>
 </section>
-    
-    <div class="waterfall">
-       
-      <div class="waterfall__item">
-        <div class="card post post-summary reveal">
-          <div class="card-header postinfo">
-            <span class="card-title">
-              <a href="https://i.acxblog.site/posts/convex-hull-and-qia-qiao/">凸包与旋转卡壳 </a>
-            </span>
-            <div class="card-meta">
-              <time>2019年03月28日</time>
               
-              <address>
+              <div class="card-header postinfo">
+                <span class="card-title">ubuntu 18.04 自建图床踩坑 (Lychee &#43; Caddy &#43; php7 &#43; MariaDB) </span>
+              </div>
+              <div class="card-header date">
                 
-                <a href='https://i.acxblog.site/categories/algorithm'>algorithm</a>
+                <div class="group">
+                  <i class="material-icons">book</i>
+                  <address>
+                    归档：
+                    <a href="https://i.acxblog.site/categories/guide">GUIDE</a>&nbsp; 
+                  </address>
+                </div>
                 
-              </address>
+                <div class="group">
+                  <i class="material-icons">flag</i>
+                  <time>创建：2020年03月 9日
+                  </time>
+                </div>
+                
+                
+
+              </div>
               
+              <div class="card-content">
+                <article class="article">
+                    
+                    
+                      
+                    
+                    <p>由于 upload.cc 把大陆屏蔽了，加上一直有自建一个图床的想法，所以就自己折腾了一下。</p>
+
+<h1 id="配置环境">配置环境</h1>
+
+<p><strong>系统：</strong> Ubuntu 18.04 LTS
+<strong>内存：</strong> 512MB
+其它不太清楚。</p>
+
+<p>用的是 <a href="https://dwz.ms/2nWPRP">这家 VPS</a> 。CN2-GIA 线路，非常快，也比较便宜。</p>
+
+<h1 id="效果">效果</h1>
+
+<p>你可以无限制地上传涩图。例如：</p>
+
+<p><img src="https://tp.acxblog.site/graph/uploads/big/f885f9a1170c92543a1d6c169e41956a.jpg" alt="" /></p>
+
+<h1 id="安装">安装</h1>
+
+<h2 id="caddy">Caddy</h2>
+
+<p>咱用的是某脚本附带的自动 SSL 配置，所以这步我们就省掉吧。</p>
+
+<h2 id="php7-1">PHP7.1</h2>
+
+<p>参考下方。</p>
+
+<pre><code>sudo apt update
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+sudo apt install php7.1-fpm php7.1-mcrypt php7.1-cli php7.1-xml php7.1-mysql php7.1-gd php7.1-imagick php7.1-recode php7.1-tidy php7.1-xmlrpc php7.1-mbstring php7.1-curl
+</code></pre>
+
+<p>记得往 Caddy 的配置文件里加这么一行：<code>fastcgi / /run/php/php7.1-fpm.sock php</code></p>
+
+<h2 id="mariadb10">MariaDB10</h2>
+
+<p>参考下方。</p>
+
+<pre><code>sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository &quot;deb [arch=amd64,arm64,ppc64el] http://mariadb.mirror.liquidtelecom.com/repo/10.4/ubuntu $(lsb_release -cs) main&quot;
+sudo apt-get update
+sudo apt-get install mariadb-server mariadb-client
+mysql_secure_installation
+</code></pre>
+
+<p>重置密码后，一路默认即可。</p>
+
+<p>之后修改 <code>/etc/mysql/my.cnf</code> 。在文件内相应位置加入如下代码：</p>
+
+<pre><code>[client]
+default-character-set=utf8mb4
+[mysqld]
+character-set-server=utf8mb4
+[mysql]
+default-character-set=utf8mb4
+</code></pre>
+
+<p>随后用 <code>service mysql restart</code> 重启服务。</p>
+
+<h2 id="lychee">Lychee</h2>
+
+<p>请参照 <a href="https://github.com/electerious/Lychee/blob/master/docs/Installation.md">官方教程</a> 进行安装。</p>
+
+<p>最后一步，不知为何我必须要把两个文件夹都赋予 <code>777</code> 权限才能正常运行。如若我有操作错误欢迎指点，毕竟我对权限之类的东西一窍不通。</p>
+
+<p>然后就可以正常使用了。</p>
+
+<h1 id="mysql-崩溃">MySQL 崩溃</h1>
+
+<p>大概是小内存引起的锅吧。</p>
+
+<p>一开始 MySQL 装不了，所以换成了 MariaDB，装是装上去了但是一阵子就崩溃需要手动重启的样子。</p>
+
+<p>我并没有找到好的解决方案，因此下面给出一些参考。</p>
+
+<p><a href="https://java-er.com/blog/mysql-crash-innodb-exit/">https://java-er.com/blog/mysql-crash-innodb-exit/</a></p>
+
+<p><a href="https://blog.csdn.net/qq_38333291/article/details/80212385">https://blog.csdn.net/qq_38333291/article/details/80212385</a></p>
+
+<h1 id="后记">后记</h1>
+
+<p>事实上我在 upload.cc 屏蔽大陆之后也尝试过找其它的替代方案，但要么是不付费就不保证服务，要么是慢，而且基本上都不准上传涩图。</p>
+
+<p>不过既然 upload.cc 不想让大陆人用它们优秀的服务，又有什么办法呢，只能自力更生了。</p>
+
+<p>讲老实话，其实这个图床大概率也派不上什么用场，因为涩图基本上都是自己用来冲的，何况在现在这个时代，谁手上没有涩图呢。</p>
+
+<p>所以果然还是因为追求这种高速，自由和自己可以掌握的感觉吧，简而言之就是闲的（</p>
+
+<p>以上。</p>
+
+<hr />
+
+<p>附一张 <a href="https://tp.acxblog.site/graph/view.php?p=15837378335634">Sample</a>：
+<img src="https://tp.acxblog.site/graph/uploads/big/333736e0c60a14fecec0b16fbe101bc3.jpg" alt="" /></p>
+
+<h1 id="引用">引用</h1>
+
+<p><a href="https://www.sunzhongwei.com/ubuntu-1804-installing-php-71">https://www.sunzhongwei.com/ubuntu-1804-installing-php-71</a></p>
+
+<p><a href="https://anntiz.github.io/2019/06/19/use-mariadb-10-4-6-with-ubuntu-18-04/index.html">在 Ubuntu 18.04 系统上安装 MariaDB 10.4 的步骤 - Marcin</a> <a href="https://creativecommons.org/licenses/by/4.0/deed.zh?__cf_chl_captcha_tk__=7ea9ab3110409abace73c203573bc0c2d484ed79-1583741002-0-Acl82R2kSvppbZ-OjvppjQSU2sn4k2xAQnsUxyHK7cFznsMgvH5LnofXOsAM_ozHkk_70eSD6qiXDKeSMnAokrsjFUASIwe2NBbFsuIV2mcf8Hb26X5D_PZziIIGc4DB4TU32E3oWA4OgTnPdd4jWjdHIaL1QRsIsNqQiaoCqmFb43AqxbyBedpC0xuVqO_zLIrgJaW8iOM5LYzQqRNNNB4gkkgGxba7qwCjhHYDysi8JkyGIQCnbFiRJGIO5qHNWqYmqssNgrhJTYesmMTtw9YyRxzub97SOc0XSKcNfDLHzat9NQdLsRpJ7qMhTwV07w4mvgfdVaHInLEd1wMPPxlaEP93zB4AWWGGr4ngqW1IgyQAIAVVZzuBJ9BnL8bCvqt41QTabijP7cIsewncfVsNMIwyf3rSAun-qTl8w44XUSMmiyT0B9YjsgDYtS2bOA">[CC BY 4.0]</a></p>
+                </article>
+              </div>
+              
+              <div class="card-action card-action-links">
+                
+                <a class="btn btn-secondary" href="https://i.acxblog.site/tags/%E5%9B%BE%E5%BA%8A">图床</a> 
+              </div>
+              
+              <div class="card-action">
+                  
+<div id="comment"></div>
+<style>
+  .v .vwrap .vheader .vinput:focus {
+    border-bottom-color: #607d8b;
+  }
+</style>
+<script>
+  window.VALINECONFIG = {
+    el: '#comment',
+    notify: false,
+    verify: false,
+    appId: 's5slEPXk44Jy2hioWeG9hIQC-gzGzoHsz',
+    appKey: 'uyRf0KsEsI1LcM4hgqaxlubx',
+    placeholder: '这里是评论~',
+    path: window.location.pathname,
+    avatar: 'retro'
+  }
+</script>  
+              </div>
+
+              
+              <div class="pagination-single">
+                 
+                
+                
+                <span class="pagination-item next">
+                  <a href="https://i.acxblog.site/posts/moe-website/" rel="next">.moe 网站随机跳转探索实录</a>
+                  <i class="material-icons">navigate_next</i>
+                </span> 
+              </div>
+              
+
             </div>
           </div>
-
-          <div class="card-content">
-            <article class="article">
-              <p>qia ke 还是 ka qiao ？</p> 
-              <a href="https://i.acxblog.site/posts/convex-hull-and-qia-qiao/" class="readmore">- 阅读全文 -</a>
-              
-            </article>
-
-          </div>
-
-          
-          <div class="card-action card-action-links">
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95'>计算几何</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E5%87%B8%E5%8C%85'>凸包</a>
-            <a class="btn btn-secondary" href='https://i.acxblog.site/tags/%E6%97%8B%E8%BD%AC%E5%8D%A1%E5%A3%B3'>旋转卡壳</a>
-          </div>
-          
-        </div>
-      </div>
-      
-    </div>
-    <div class="center">
-      <div class="pagination">
-         
-
-
+        </section>
       </div>
     </div>
   </div>
-</div> <footer class="page-footer">
+  <footer class="page-footer">
   <div class="container">
     <div class="inner">
       <div class="wrapper">
@@ -490,6 +649,7 @@
   </div>
 </footer>
 </main>
+
 <script type="text/javascript" src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/languages/go.min.js"></script>

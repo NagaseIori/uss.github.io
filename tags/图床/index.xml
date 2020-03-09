@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>GUIDE on FantasyAir</title>
-    <link>https://i.acxblog.site/categories/guide/</link>
-    <description>Recent content in GUIDE on FantasyAir</description>
+    <title>图床 on FantasyAir</title>
+    <link>https://i.acxblog.site/tags/%E5%9B%BE%E5%BA%8A/</link>
+    <description>Recent content in 图床 on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 09 Mar 2020 12:14:26 +0800</lastBuildDate>
     
-	<atom:link href="https://i.acxblog.site/categories/guide/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://i.acxblog.site/tags/%E5%9B%BE%E5%BA%8A/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://i.acxblog.site/posts/build-a-graph-site/</guid>
       <description>&lt;p&gt;由于 upload.cc 把大陆屏蔽了，加上一直有自建一个图床的想法，所以就自己折腾了一下。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>ubuntu 18.04 ss-libev 部署踩坑</title>
-      <link>https://i.acxblog.site/posts/ss-libev/</link>
-      <pubDate>Mon, 17 Feb 2020 20:21:42 +0800</pubDate>
-      
-      <guid>https://i.acxblog.site/posts/ss-libev/</guid>
-      <description>&lt;p&gt;技术性探讨。&lt;/p&gt;</description>
     </item>
     
   </channel>
