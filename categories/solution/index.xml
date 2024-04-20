@@ -2,57 +2,57 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>solution on FantasyAir</title>
-    <link>https://i.acxblog.site/categories/solution/</link>
+    <link>https://i.iorinn.moe/categories/solution/</link>
     <description>Recent content in solution on FantasyAir</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 30 Mar 2019 21:11:27 +0800</lastBuildDate>
     
-	<atom:link href="https://i.acxblog.site/categories/solution/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://i.iorinn.moe/categories/solution/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>JZOJ6092 附耳而至</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6092/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6092/</link>
       <pubDate>Sat, 30 Mar 2019 21:11:27 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6092/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6092/</guid>
       <description>&lt;p&gt;喵。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>JZOJ6096 森林</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6096/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6096/</link>
       <pubDate>Fri, 29 Mar 2019 20:26:55 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6096/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6096/</guid>
       <description>&lt;p&gt;转化比较巧妙，考场上想傻逼了的题目。很好打。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>NOI2018 你的名字</title>
-      <link>https://i.acxblog.site/posts/sol-your-name/</link>
+      <link>https://i.iorinn.moe/posts/sol-your-name/</link>
       <pubDate>Thu, 28 Mar 2019 23:10:46 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-your-name/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-your-name/</guid>
       <description>&lt;p&gt;调调改改了一晚上才过掉。总而言之还是自己对题目理解太不深刻了。基本上是对着抄但是又抄得很无奈。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>JZOJ6086 动态半平面交</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6086/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6086/</link>
       <pubDate>Thu, 28 Mar 2019 16:26:02 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6086/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6086/</guid>
       <description>&lt;p&gt;常数制造机&amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>JZOJ2090 圆</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-2090/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-2090/</link>
       <pubDate>Thu, 28 Mar 2019 09:27:57 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-2090/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-2090/</guid>
       <description>&lt;h1 id=&#34;problem&#34;&gt;Problem&lt;/h1&gt;
 
 &lt;p&gt;给定 $n$ ，求有多少个 $1\to n$ 的排列可以分割成三个上升子序列。$n \leq 500$。&lt;/p&gt;</description>
@@ -60,10 +60,10 @@
     
     <item>
       <title>JZOJ6080 IOer</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6080/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6080/</link>
       <pubDate>Sat, 23 Mar 2019 21:43:10 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6080/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6080/</guid>
       <description>&lt;p&gt;好题好做法&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;感谢 gjx 的讲解。&lt;/p&gt;</description>
@@ -71,55 +71,55 @@
     
     <item>
       <title>JZOJ6077 K君的游戏</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6077/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6077/</link>
       <pubDate>Fri, 22 Mar 2019 22:06:42 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6077/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6077/</guid>
       <description>&lt;p&gt;⭐&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>SPOJ1812 LCS2</title>
-      <link>https://i.acxblog.site/posts/sol-spoj-1812/</link>
+      <link>https://i.iorinn.moe/posts/sol-spoj-1812/</link>
       <pubDate>Thu, 21 Mar 2019 22:43:08 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-spoj-1812/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-spoj-1812/</guid>
       <description>&lt;p&gt;浪费了我一晚上的生命&amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Railway</title>
-      <link>https://i.acxblog.site/posts/sol-jzoj-6074/</link>
+      <link>https://i.iorinn.moe/posts/sol-jzoj-6074/</link>
       <pubDate>Thu, 21 Mar 2019 09:50:30 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-jzoj-6074/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-jzoj-6074/</guid>
       <description>&lt;p&gt;做法很巧妙。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>AGC015E Mr.Aoki Incubator</title>
-      <link>https://i.acxblog.site/posts/sol-agc-015-e/</link>
+      <link>https://i.iorinn.moe/posts/sol-agc-015-e/</link>
       <pubDate>Wed, 20 Mar 2019 20:09:09 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-agc-015-e/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-agc-015-e/</guid>
       <description>&lt;p&gt;有点难&amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>AGC032C Differ by 1 bit</title>
-      <link>https://i.acxblog.site/posts/sol-agc-032-c/</link>
+      <link>https://i.iorinn.moe/posts/sol-agc-032-c/</link>
       <pubDate>Sun, 17 Mar 2019 20:11:26 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-agc-032-c/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-agc-032-c/</guid>
       <description>&lt;p&gt;有点神的构造，考场上想复杂了&amp;hellip;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>LP4383 林克卡特树</title>
-      <link>https://i.acxblog.site/posts/sol-luogu-4383/</link>
+      <link>https://i.iorinn.moe/posts/sol-luogu-4383/</link>
       <pubDate>Fri, 15 Mar 2019 22:42:36 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-luogu-4383/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-luogu-4383/</guid>
       <description>&lt;p&gt;弄了一晚上，几篇博客交换看才看懂。&lt;/p&gt;
 
 &lt;p&gt;可能也是因为分心了的缘故。&lt;/p&gt;</description>
@@ -127,10 +127,10 @@
     
     <item>
       <title>UOJ462 新年的小黄鸭</title>
-      <link>https://i.acxblog.site/posts/sol-uoj-462/</link>
+      <link>https://i.iorinn.moe/posts/sol-uoj-462/</link>
       <pubDate>Fri, 15 Mar 2019 15:05:29 +0800</pubDate>
       
-      <guid>https://i.acxblog.site/posts/sol-uoj-462/</guid>
+      <guid>https://i.iorinn.moe/posts/sol-uoj-462/</guid>
       <description>&lt;p&gt;一道不错&lt;del&gt;相对简单&lt;/del&gt;的题目。&lt;/p&gt;</description>
     </item>
     
